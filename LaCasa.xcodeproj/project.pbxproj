@@ -14,6 +14,9 @@
 		1B89D6122A4282DB008C5976 /* LaCasaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6112A4282DB008C5976 /* LaCasaTests.swift */; };
 		1B89D61C2A4282DB008C5976 /* LaCasaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D61B2A4282DB008C5976 /* LaCasaUITests.swift */; };
 		1B89D61E2A4282DB008C5976 /* LaCasaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D61D2A4282DB008C5976 /* LaCasaUITestsLaunchTests.swift */; };
+		1B89D62C2A436017008C5976 /* Chore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D62B2A436017008C5976 /* Chore.swift */; };
+		1B89D62E2A43626E008C5976 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D62D2A43626E008C5976 /* ModelData.swift */; };
+		1B89D6302A43DF70008C5976 /* SaveRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D62F2A43DF70008C5976 /* SaveRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,10 @@
 		1B89D6172A4282DB008C5976 /* LaCasaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LaCasaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B89D61B2A4282DB008C5976 /* LaCasaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaCasaUITests.swift; sourceTree = "<group>"; };
 		1B89D61D2A4282DB008C5976 /* LaCasaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaCasaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1B89D62B2A436017008C5976 /* Chore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chore.swift; sourceTree = "<group>"; };
+		1B89D62D2A43626E008C5976 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		1B89D62F2A43DF70008C5976 /* SaveRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRequest.swift; sourceTree = "<group>"; };
+		1B89D6312A44D39D008C5976 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +101,8 @@
 		1B89D5FF2A4282D9008C5976 /* LaCasa */ = {
 			isa = PBXGroup;
 			children = (
+				1B89D6312A44D39D008C5976 /* Info.plist */,
+				1B89D62A2A436003008C5976 /* Models */,
 				1B89D6002A4282D9008C5976 /* LaCasaApp.swift */,
 				1B89D6022A4282D9008C5976 /* ContentView.swift */,
 				1B89D6042A4282DA008C5976 /* Assets.xcassets */,
@@ -125,6 +134,16 @@
 				1B89D61D2A4282DB008C5976 /* LaCasaUITestsLaunchTests.swift */,
 			);
 			path = LaCasaUITests;
+			sourceTree = "<group>";
+		};
+		1B89D62A2A436003008C5976 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1B89D62B2A436017008C5976 /* Chore.swift */,
+				1B89D62D2A43626E008C5976 /* ModelData.swift */,
+				1B89D62F2A43DF70008C5976 /* SaveRequest.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +276,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B89D62C2A436017008C5976 /* Chore.swift in Sources */,
+				1B89D62E2A43626E008C5976 /* ModelData.swift in Sources */,
+				1B89D6302A43DF70008C5976 /* SaveRequest.swift in Sources */,
 				1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */,
 				1B89D6012A4282D9008C5976 /* LaCasaApp.swift in Sources */,
 			);
@@ -420,11 +442,13 @@
 				DEVELOPMENT_TEAM = UXUU2WMD8Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LaCasa/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -449,11 +473,13 @@
 				DEVELOPMENT_TEAM = UXUU2WMD8Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LaCasa/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -8,19 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var modelData: ModelData
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, World!")
+        VStack{
+            ForEach(modelData.chores, id: \.kerb) { chore in
+                Text(chore.fname)
+            }
+            Button("Request Save") {
+                Task {
+                    await modelData.requestSave()
+                }
+            }
+            
+        }.onAppear{
+            modelData.getChores()
         }
-        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(ModelData())
     }
 }
