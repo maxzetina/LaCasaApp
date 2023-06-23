@@ -7,18 +7,16 @@
 
 import SwiftUI
 
-struct Chores: View {
+struct ChoresView: View {
     @EnvironmentObject var modelData: ModelData
 
     var body: some View {
         VStack{
+            if modelData.loadingChores {
+                Text("Loading...")
+            }
             ForEach(modelData.chores, id: \.kerb) { chore in
                 Text(chore.fname)
-            }
-            Button("Request Save") {
-                Task {
-                    await modelData.requestSave()
-                }
             }
             
         }.onAppear{
@@ -27,8 +25,8 @@ struct Chores: View {
     }
 }
 
-struct Chores_Previews: PreviewProvider {
+struct ChoresView_Previews: PreviewProvider {
     static var previews: some View {
-        Chores().environmentObject(ModelData())
+        ChoresView().environmentObject(ModelData())
     }
 }

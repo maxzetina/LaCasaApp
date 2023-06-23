@@ -12,12 +12,12 @@ struct ContentView: View {
 
     var body: some View {
         TabView() {
-            Chores()
+            ChoresView()
                 .tabItem {
                     Label("Chores", systemImage: "list.bullet")
                 }
 
-            Saves()
+            SavesView()
                 .tabItem {
                     Label("Saves", systemImage: "fork.knife")
                 }

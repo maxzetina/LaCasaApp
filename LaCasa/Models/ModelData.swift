@@ -10,6 +10,8 @@ import Combine
 
 class ModelData: ObservableObject {
     @Published var chores: [Chore] = []
+    @Published var loadingChores: Bool = true
+    @Published var saves: [Save] = []
     
     let baseURL: String = "https://la-casa-app-server.vercel.app"
     
@@ -34,6 +36,38 @@ class ModelData: ObservableObject {
                     do {
                         let decodedChores = try JSONDecoder().decode([Chore].self, from: data)
                         self.chores = decodedChores
+                        self.loadingChores = false
+                    } catch let error {
+                        print("Error decoding: ", error)
+                    }
+                }
+            }
+        }
+        dataTask.resume()
+    }
+    
+    func getSaves() {
+        let endpoint = "/api/saves"
+        
+        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
+
+        let urlRequest = URLRequest(url: url)
+
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse else { return }
+
+            if response.statusCode == 200 {
+                guard let data = data else { return }
+                DispatchQueue.main.async {
+                    do {
+                        let decodedSaves = try JSONDecoder().decode([Save].self, from: data)
+                        self.saves = decodedSaves
+                        print(decodedSaves)
                     } catch let error {
                         print("Error decoding: ", error)
                     }
@@ -45,21 +79,23 @@ class ModelData: ObservableObject {
     
     func requestSave() async {
 
-        let saveRequest: SaveRequest = SaveRequest(name: "TestApp3", day: "2023/06/22", request: "did this work?")
+        let saveRequest: SaveRequest = SaveRequest(name: "TestApp4", day: "2023/06/23", request: "did this work?")
         
         guard let encoded = try? JSONEncoder().encode(saveRequest) else {
             print("Failed to encode request")
             return
         }
         
-        let url = URL(string: baseURL + "/api/requestSave")!
+        let endpoint = "/api/requestSave"
+        
+        let url = URL(string: baseURL + endpoint)!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         do {
             // (data, response)
             let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
-        
+            self.saves.append(Save(name: saveRequest.name, request: saveRequest.request))
         } catch {
             print("Request failed.")
         }
