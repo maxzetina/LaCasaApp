@@ -9,12 +9,13 @@ import SwiftUI
 
 struct ChoresView: View {
     @EnvironmentObject var modelData: ModelData
-
+    
     var body: some View {
         VStack{
             if modelData.loadingChores {
-                Text("Loading...")
+                LoadingSpinner(text: "Loading chores...", scale: 2)
             }
+            
             ForEach(modelData.chores, id: \.kerb) { chore in
                 Text(chore.fname)
             }

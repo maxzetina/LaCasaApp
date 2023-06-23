@@ -9,18 +9,23 @@ import SwiftUI
 
 struct SavesView: View {
     @EnvironmentObject var modelData: ModelData
-    
+    @State private var date = Date()
+
     var body: some View {
         VStack{
-//            if modelData.loadingChores {
-//                Text("Loading...")
-//            }
             ForEach(modelData.saves, id: \.name) { save in
                 Text(save.name)
             }
+        
+            DatePicker(
+                "Start Date",
+                selection: $date,
+                displayedComponents: [.date]
+            )
+            
             Button("Request Save") {
                 Task {
-                    await modelData.requestSave()
+                    await modelData.requestSave(date: date)
                 }
             }
             

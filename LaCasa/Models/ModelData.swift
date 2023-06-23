@@ -77,9 +77,12 @@ class ModelData: ObservableObject {
         dataTask.resume()
     }
     
-    func requestSave() async {
+    func requestSave(date: Date) async {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        let stringDate = dateFormatter.string(from: date)
 
-        let saveRequest: SaveRequest = SaveRequest(name: "TestApp4", day: "2023/06/23", request: "did this work?")
+        let saveRequest: SaveRequest = SaveRequest(name: "TestApp5", day: stringDate, request: "did this work?")
         
         guard let encoded = try? JSONEncoder().encode(saveRequest) else {
             print("Failed to encode request")
