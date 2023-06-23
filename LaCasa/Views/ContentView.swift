@@ -11,18 +11,16 @@ struct ContentView: View {
     @EnvironmentObject var modelData: ModelData
 
     var body: some View {
-        VStack{
-            ForEach(modelData.chores, id: \.kerb) { chore in
-                Text(chore.fname)
-            }
-            Button("Request Save") {
-                Task {
-                    await modelData.requestSave()
+        TabView() {
+            Chores()
+                .tabItem {
+                    Label("Chores", systemImage: "list.bullet")
                 }
-            }
-            
-        }.onAppear{
-            modelData.getChores()
+
+            Saves()
+                .tabItem {
+                    Label("Saves", systemImage: "fork.knife")
+                }
         }
     }
 }
