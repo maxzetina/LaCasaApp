@@ -21,11 +21,16 @@ struct SavesView: View {
                 "Start Date",
                 selection: $date,
                 displayedComponents: [.date]
-            )
+            ).padding()
             
             Button("Request Save") {
                 Task {
                     await modelData.requestSave(date: date)
+                }
+            }
+            Button("Push Dinner") {
+                Task {
+                    await modelData.pushDinner()
                 }
             }
             

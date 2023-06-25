@@ -67,7 +67,6 @@ class ModelData: ObservableObject {
                     do {
                         let decodedSaves = try JSONDecoder().decode([Save].self, from: data)
                         self.saves = decodedSaves
-                        print(decodedSaves)
                     } catch let error {
                         print("Error decoding: ", error)
                     }
@@ -99,6 +98,27 @@ class ModelData: ObservableObject {
             // (data, response)
             let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
             self.saves.append(Save(name: saveRequest.name, request: saveRequest.request))
+        } catch {
+            print("Request failed.")
+        }
+    }
+    
+    func pushDinner() async {
+
+        guard let encoded = try? JSONEncoder().encode(["test": "hi"]) else {
+            print("Failed to encode request")
+            return
+        }
+//
+        let endpoint = "/api/sendDinnerPushed"
+        
+        let url = URL(string: baseURL + endpoint)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        do {
+            // (data, response)
+            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
         } catch {
             print("Request failed.")
         }

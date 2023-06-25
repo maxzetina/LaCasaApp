@@ -16,7 +16,6 @@ struct LoadingSpinner: View {
         VStack{
             ProgressView(text).scaleEffect(scaleEffect).progressViewStyle(CircularProgressViewStyle(tint: .blue))
                         
-//            Image("LSImageB")
         }.onAppear{
             scaleEffect = CGSize(width: scale, height: scale)
         }
