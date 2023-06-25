@@ -16,18 +16,19 @@ struct SavesView: View {
             ForEach(modelData.saves, id: \.name) { save in
                 Text(save.name)
             }
-        
+            
             DatePicker(
                 "Start Date",
                 selection: $date,
                 displayedComponents: [.date]
             ).padding()
-            
+
             Button("Request Save") {
                 Task {
                     await modelData.requestSave(date: date)
                 }
             }
+            .padding()
             Button("Push Dinner") {
                 Task {
                     await modelData.pushDinner()

@@ -21,6 +21,8 @@
 		1B89D6392A452ADB008C5976 /* SavesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6382A452ADB008C5976 /* SavesView.swift */; };
 		1B89D63B2A45E909008C5976 /* Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D63A2A45E909008C5976 /* Save.swift */; };
 		1B89D63D2A4646CF008C5976 /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */; };
+		1B89D63F2A47F30E008C5976 /* ChoresIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D63E2A47F30E008C5976 /* ChoresIntro.swift */; };
+		1B89D6412A47FC06008C5976 /* ChoreRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6402A47FC06008C5976 /* ChoreRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		1B89D6382A452ADB008C5976 /* SavesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavesView.swift; sourceTree = "<group>"; };
 		1B89D63A2A45E909008C5976 /* Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Save.swift; sourceTree = "<group>"; };
 		1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
+		1B89D63E2A47F30E008C5976 /* ChoresIntro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoresIntro.swift; sourceTree = "<group>"; };
+		1B89D6402A47FC06008C5976 /* ChoreRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +164,8 @@
 			children = (
 				1B89D6022A4282D9008C5976 /* ContentView.swift */,
 				1B89D6362A452ABA008C5976 /* ChoresView.swift */,
+				1B89D6402A47FC06008C5976 /* ChoreRow.swift */,
+				1B89D63E2A47F30E008C5976 /* ChoresIntro.swift */,
 				1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */,
 				1B89D6382A452ADB008C5976 /* SavesView.swift */,
 			);
@@ -302,8 +308,10 @@
 				1B89D6302A43DF70008C5976 /* SaveRequest.swift in Sources */,
 				1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */,
 				1B89D63B2A45E909008C5976 /* Save.swift in Sources */,
+				1B89D6412A47FC06008C5976 /* ChoreRow.swift in Sources */,
 				1B89D6392A452ADB008C5976 /* SavesView.swift in Sources */,
 				1B89D6012A4282D9008C5976 /* LaCasaApp.swift in Sources */,
+				1B89D63F2A47F30E008C5976 /* ChoresIntro.swift in Sources */,
 				1B89D6372A452ABA008C5976 /* ChoresView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

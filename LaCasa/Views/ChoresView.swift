@@ -15,9 +15,20 @@ struct ChoresView: View {
             if modelData.loadingChores {
                 LoadingSpinner(text: "Loading chores...", scale: 2)
             }
-            
-            ForEach(modelData.chores, id: \.kerb) { chore in
-                Text(chore.fname)
+            else{
+                NavigationView{
+                    List{
+                        ChoresIntro()
+                        
+                        ForEach(modelData.chores, id: \.kerb) { chore in
+                                NavigationLink {
+                                    Text(chore.chore)
+                                } label: {
+                                    ChoreRow(chore: chore)
+                                }
+                        }
+                    }.navigationTitle("Chores")
+                }
             }
             
         }.onAppear{
