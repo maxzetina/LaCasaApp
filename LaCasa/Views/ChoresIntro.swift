@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ChoresIntro: View {
+    var team: Int
+    var dueDate: String
+    
     var body: some View {
         VStack{
             HStack{
@@ -15,14 +18,14 @@ struct ChoresIntro: View {
                 ZStack{
                     Capsule().frame(width: 150, height: 50)
                     
-                    Text("Team 1").foregroundColor(.white).font(.title).fontWeight(.bold)
+                    Text("Team " + String(team)).foregroundColor(.white).font(.title).fontWeight(.bold)
                 }
                 Spacer()
             }.padding()
 
             HStack{
                 Text("Due:").bold()
-                Text("Sun Jun 25 @ 1:00pm").foregroundColor(.red)
+                Text(dueDate + " @ 1:00pm").foregroundColor(.red)
             }.font(.title3).fontWeight(.medium)
         }
     }
@@ -30,6 +33,6 @@ struct ChoresIntro: View {
 
 struct ChoresIntro_Previews: PreviewProvider {
     static var previews: some View {
-        ChoresIntro()
+        ChoresIntro(team: 1, dueDate: "Sun, Jun 25")
     }
 }
