@@ -31,10 +31,8 @@ struct ChoresView: View {
                                     } label: {
                                         ChoreRow(chore: chore)
                                     }
-                            }.listRowBackground(
-                                RoundedRectangle(cornerRadius: 10).frame(height: 70).foregroundColor(Color("ChoreRowColor"))
-                            ).listRowSeparator(.hidden).padding(4)
-                        }.foregroundColor(.white)
+                            }
+                        }
                     }.navigationTitle("Chores")
                 }
             }
