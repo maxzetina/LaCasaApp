@@ -11,6 +11,8 @@ struct ChoresView: View {
     @EnvironmentObject var modelData: ModelData
     var dueDate: String = next(self: Date(), weekday: Weekday.sunday, considerToday: true)
     
+    @State var listAnimationTrigger = false
+    
     var body: some View {
         VStack{
             if modelData.loadingChores {
@@ -25,12 +27,16 @@ struct ChoresView: View {
                         }
                     
                         Section{
-                            ForEach(modelData.chores, id: \.kerb) { chore in
+                            ForEach(modelData.chores) { chore in
                                     NavigationLink {
-                                        Text(chore.chore)
+                                        ChoresDetail(chore: chore)
                                     } label: {
                                         ChoreRow(chore: chore)
                                     }
+                            }
+                        }.opacity(self.listAnimationTrigger ? 1.0 : 0.0).onAppear(){
+                            withAnimation(.linear(duration: 2)){
+                                self.listAnimationTrigger = true
                             }
                         }
                     }.navigationTitle("Chores")

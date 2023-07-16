@@ -21,6 +21,6 @@ struct ChoreRow: View {
         
 struct ChoreRow_Previews: PreviewProvider {
     static var previews: some View {
-        ChoreRow(chore: Chore(fname: "Maxwell", lname: "Zetina", kerb: "zetina", team: 1, chore: "CHORE", chores_completed: 3))
+        ChoreRow(chore: Chore(id: 100, fname: "Maxwell", lname: "Zetina", kerb: "zetina", team: 1, chore: "CHORE", chores_completed: 3, description: "do this."))
     }
 }

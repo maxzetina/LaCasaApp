@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct Chore: Hashable, Codable {
+struct Chore: Hashable, Codable, Identifiable {
+    var id: Int
     var fname: String
     var lname: String
     var kerb: String
     var team: Int
     var chore: String
     var chores_completed: Int
+    var description: String
 }
-

@@ -10,12 +10,12 @@ import Combine
 
 class ModelData: ObservableObject {
     @Published var chores: [Chore] = []
-    @Published var currentTeam: Int = 1
+    @Published var currentTeam: Int = 0
     @Published var loadingChores: Bool = true
     @Published var saves: [Save] = []
-    
+        
     let baseURL: String = "https://la-casa-app-server.vercel.app"
-    
+
     func getChores() {
         let endpoint = "/api/chores"
         
@@ -37,7 +37,7 @@ class ModelData: ObservableObject {
                     do {
                         let decodedChores = try JSONDecoder().decode([Chore].self, from: data)
                         self.chores = decodedChores
-                        self.currentTeam = self.chores[0].team
+                        self.currentTeam = decodedChores[0].team
                         self.loadingChores = false
                     } catch let error {
                         print("Error decoding: ", error)
