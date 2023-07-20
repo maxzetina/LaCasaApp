@@ -144,7 +144,7 @@ class ModelData: ObservableObject {
             // (data, response)
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
             let decodedResponse = try JSONDecoder().decode(Bool.self, from: data)
- 
+
             return decodedResponse
         } catch {
             print("Request failed.")

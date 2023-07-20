@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct Home: View {
-    var kerb: String
     @Binding var isLoggedIn: Bool
+    var kerb: String
     
     var body: some View {
         VStack{
@@ -23,6 +23,6 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home(kerb: "KERB", isLoggedIn: .constant(true))
+        Home(isLoggedIn: .constant(true), kerb: "KERB")
     }
 }

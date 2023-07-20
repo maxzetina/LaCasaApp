@@ -19,7 +19,7 @@ struct ContentView: View {
             }
             else{
                 TabView() {
-                    Home(kerb: kerb, isLoggedIn: $isLoggedIn)
+                    Home(isLoggedIn: $isLoggedIn, kerb: kerb)
                         .tabItem{
                             Label("Home", systemImage: "house")
                     }
