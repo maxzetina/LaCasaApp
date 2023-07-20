@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CryptoKit
 
 class ModelData: ObservableObject {
     @Published var chores: [Chore] = []
@@ -106,12 +107,10 @@ class ModelData: ObservableObject {
     }
     
     func pushDinner() async {
-
         guard let encoded = try? JSONEncoder().encode(["test": "hi"]) else {
             print("Failed to encode request")
             return
         }
-//
         let endpoint = "/api/sendDinnerPushed"
         
         let url = URL(string: baseURL + endpoint)!
@@ -125,6 +124,31 @@ class ModelData: ObservableObject {
             print("Request failed.")
         }
     }
+    
+    func handleLogin(kerb: String, password: String) async -> Bool {
+        let inputtedPasswordData = Data(password.utf8)
+        let hashedInput = SHA512.hash(data: inputtedPasswordData).compactMap { String(format: "%02x", $0) }.joined()
+        
+        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": hashedInput]) else {
+            print("Failed to encode request")
+            return false
+        }
+        
+        let endpoint = "/api/login"
+        
+        let url = URL(string: baseURL + endpoint)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        do {
+            // (data, response)
+            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
+            let decodedResponse = try JSONDecoder().decode(Bool.self, from: data)
+ 
+            return decodedResponse
+        } catch {
+            print("Request failed.")
+        }
+        return false
+    }
 }
-
-

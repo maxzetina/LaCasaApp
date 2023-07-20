@@ -24,6 +24,9 @@
 		1B89D63F2A47F30E008C5976 /* ChoresIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D63E2A47F30E008C5976 /* ChoresIntro.swift */; };
 		1B89D6412A47FC06008C5976 /* ChoreRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6402A47FC06008C5976 /* ChoreRow.swift */; };
 		1B89D6432A4D18EB008C5976 /* ChoresDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6422A4D18EB008C5976 /* ChoresDetail.swift */; };
+		1B89D6472A688BAD008C5976 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6462A688BAD008C5976 /* Login.swift */; };
+		1B89D6492A689D3B008C5976 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6482A689D3B008C5976 /* User.swift */; };
+		1B89D64B2A68E20C008C5976 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D64A2A68E20C008C5976 /* Home.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +68,9 @@
 		1B89D63E2A47F30E008C5976 /* ChoresIntro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoresIntro.swift; sourceTree = "<group>"; };
 		1B89D6402A47FC06008C5976 /* ChoreRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreRow.swift; sourceTree = "<group>"; };
 		1B89D6422A4D18EB008C5976 /* ChoresDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoresDetail.swift; sourceTree = "<group>"; };
+		1B89D6462A688BAD008C5976 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		1B89D6482A689D3B008C5976 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1B89D64A2A68E20C008C5976 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +161,7 @@
 			children = (
 				1B89D62B2A436017008C5976 /* Chore.swift */,
 				1B89D62D2A43626E008C5976 /* ModelData.swift */,
+				1B89D6482A689D3B008C5976 /* User.swift */,
 				1B89D63A2A45E909008C5976 /* Save.swift */,
 				1B89D62F2A43DF70008C5976 /* SaveRequest.swift */,
 			);
@@ -165,12 +172,14 @@
 			isa = PBXGroup;
 			children = (
 				1B89D6022A4282D9008C5976 /* ContentView.swift */,
+				1B89D64A2A68E20C008C5976 /* Home.swift */,
 				1B89D6362A452ABA008C5976 /* ChoresView.swift */,
 				1B89D6422A4D18EB008C5976 /* ChoresDetail.swift */,
 				1B89D6402A47FC06008C5976 /* ChoreRow.swift */,
 				1B89D63E2A47F30E008C5976 /* ChoresIntro.swift */,
 				1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */,
 				1B89D6382A452ADB008C5976 /* SavesView.swift */,
+				1B89D6462A688BAD008C5976 /* Login.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,9 +316,12 @@
 			files = (
 				1B89D62C2A436017008C5976 /* Chore.swift in Sources */,
 				1B89D62E2A43626E008C5976 /* ModelData.swift in Sources */,
+				1B89D6472A688BAD008C5976 /* Login.swift in Sources */,
 				1B89D63D2A4646CF008C5976 /* LoadingSpinner.swift in Sources */,
 				1B89D6302A43DF70008C5976 /* SaveRequest.swift in Sources */,
 				1B89D6432A4D18EB008C5976 /* ChoresDetail.swift in Sources */,
+				1B89D6492A689D3B008C5976 /* User.swift in Sources */,
+				1B89D64B2A68E20C008C5976 /* Home.swift in Sources */,
 				1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */,
 				1B89D63B2A45E909008C5976 /* Save.swift in Sources */,
 				1B89D6412A47FC06008C5976 /* ChoreRow.swift in Sources */,
