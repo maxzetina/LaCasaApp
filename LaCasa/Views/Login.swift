@@ -60,7 +60,7 @@ struct Login: View {
             ).padding(.bottom, 4.0)
         
            
-            Button("Forgot Password"){
+            Button("Forgot Password?"){
                 
             }.foregroundColor(Color("ForgotPwColor"))
             
