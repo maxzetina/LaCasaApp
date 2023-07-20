@@ -97,17 +97,8 @@ struct Login: View {
             Button("Sign Up"){
                 showSignupSheet.toggle()
             }.foregroundColor(.black).sheet(isPresented: $showSignupSheet){
-                VStack{
-                    Text("License Agreement")
-                        .font(.title)
-                        .padding(50)
-                    Text("""
-                            Terms and conditions go here.
-                        """)
-                        .padding(50)
-                    Button("Dismiss",
-                           action: { showSignupSheet.toggle() })
-                }
+                
+                SignUp(showSignupSheet: $showSignupSheet)
             }
                 
             Spacer()
