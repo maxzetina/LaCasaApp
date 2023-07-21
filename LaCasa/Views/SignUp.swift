@@ -29,104 +29,126 @@ struct SignUp: View {
     
     @State var signUpPressed: Bool = false
     
+    @FocusState var isPwInputActive: Bool
+    @FocusState var isConfirmPwInputActive: Bool
+
+    
     let bulletPoint: String = "\u{2022}"
     let minPasswordLen = 8
     
     var body: some View {
-        NavigationStack{
-            VStack(alignment: .leading){
-                KerbTextField(kerb: $kerb)
-                Spacer().frame(height: 25)
-                
-                Group{
-                    Text("Your password must:").fontWeight(.bold).padding(.bottom, 4.0)
-
-                    Text(bulletPoint + "  Be at least \(minPasswordLen) characters").foregroundColor(pwMeetsLen ? .green : .red)
-                    Text(bulletPoint + "  Include an uppercase letter").foregroundColor(includesUppercase ? .green : .red)
-                    Text(bulletPoint + "  Include at least one number").foregroundColor(includesNumber ? .green : .red)
-                    Text(bulletPoint + "  Include at least one symbol").foregroundColor(includesSymbol ? .green : .red)
-                }
-
-                PasswordTextField(password: $password).onChange(of: password){ newValue in
+        NavigationView{
+            ScrollView(showsIndicators: false){
+                Spacer().frame(height: 150)
+                VStack(alignment: .leading){
+                    KerbTextField(kerb: $kerb)
                     
-                    pwMeetsLen = newValue.count >= minPasswordLen
-                    includesUppercase = containsUppercase(text: newValue)
-                    includesNumber = containsNumber(text: newValue)
-                    includesSymbol = containsSymbol(text: newValue)
-                }
-                                
-                RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(.gray).opacity(0.25).overlay(
-                    HStack{
-                        SecureField("Confirm password", text: $confirmedPassword)   .disableAutocorrection(true)
-                            .autocapitalization(.none)
-                            .padding(.leading, 12.0)
-                            .onChange(of: confirmedPassword){
-                                newValue in
-                                
-                                passwordsMatch = password == newValue
+                    Spacer().frame(height: 25)
+                    
+                    Group{
+                        Text("Your password must:").fontWeight(.bold).padding(.bottom, 4.0)
+                        
+                        Text(bulletPoint + "  Be at least \(minPasswordLen) characters").foregroundColor(pwMeetsLen ? .green : .red)
+                        Text(bulletPoint + "  Include an uppercase letter").foregroundColor(includesUppercase ? .green : .red)
+                        Text(bulletPoint + "  Include at least one number").foregroundColor(includesNumber ? .green : .red)
+                        Text(bulletPoint + "  Include at least one symbol").foregroundColor(includesSymbol ? .green : .red)
+                    }
+                    
+                    PasswordTextField(password: $password).onChange(of: password){ newValue in
+                        
+                        pwMeetsLen = newValue.count >= minPasswordLen
+                        includesUppercase = containsUppercase(text: newValue)
+                        includesNumber = containsNumber(text: newValue)
+                        includesSymbol = containsSymbol(text: newValue)
+                    }.toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
+
+                            Button("Done") {
+                                if isPwInputActive {
+                                   isPwInputActive = false
+                                    isConfirmPwInputActive = true
+                               } else {
+                                   isConfirmPwInputActive = false
+                               }
                             }
-                    }
-                ).padding(.bottom, 4.0)
-                
-               
-                Text("Passwords must match").foregroundColor(passwordsMatch ? .green : .red).font(.footnote)
-                
-                Spacer().frame(height: 60)
-
-                Button(action: {
-                    Task {
-                        kerbMeetsLen = 3 <= kerb.count && kerb.count <= 8
-                        
-                        if(!(kerbMeetsLen && pwMeetsLen && includesUppercase && includesNumber && includesSymbol && passwordsMatch)){
-                            showAlert.toggle()
-                        }
-                        else{
-                            signUpPressed.toggle()
-
-                            await modelData.signup(kerb: kerb, password: password)
-                            showSignupSheet.toggle()
-                            signUpPressed.toggle()
                         }
                     }
-                }, label: {
-                    RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(Color("LoginButtonColor")).overlay(
-                        
-                        VStack{
-                            if(signUpPressed){
-                                ProgressView().scaleEffect(1.5).progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    .focused($isPwInputActive)
+                    
+                    RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(.gray).opacity(0.25).overlay(
+                        HStack{
+                            SecureField("Confirm password", text: $confirmedPassword)   .disableAutocorrection(true)
+                                .autocapitalization(.none)
+                                .padding(.leading, 12.0)
+                                .onChange(of: confirmedPassword){
+                                    newValue in
+                                    
+                                    passwordsMatch = password == newValue
+                                }
+                        }
+                    ).padding(.bottom, 4.0).focused($isConfirmPwInputActive)
+                    
+                    
+                    Text("Passwords must match").foregroundColor(passwordsMatch ? .green : .red).font(.footnote)
+                    
+                    Spacer().frame(height: 60)
+                    
+                    Button(action: {
+                        Task {
+                            kerbMeetsLen = 3 <= kerb.count && kerb.count <= 8
+                            
+                            if(!(kerbMeetsLen && pwMeetsLen && includesUppercase && includesNumber && includesSymbol && passwordsMatch)){
+                                showAlert.toggle()
                             }
                             else{
-                                Text("Sign Up").foregroundColor(.white).fontWeight(.bold).font(.title3)
+                                signUpPressed.toggle()
+                                
+                                await modelData.signup(kerb: kerb, password: password)
+                                showSignupSheet.toggle()
+                                signUpPressed.toggle()
                             }
                         }
-                    )
-                }).alert(isPresented: $showAlert){
-                    var title = ""
-                    var msg = ""
-                    if(!kerbMeetsLen) {
-                        title = "Invalid Kerb"
-                        msg = "Kerb must be between 3 and 8 characters"
+                    }, label: {
+                        RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(Color("LoginButtonColor")).overlay(
+                            
+                            VStack{
+                                if(signUpPressed){
+                                    ProgressView().scaleEffect(1.5).progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                }
+                                else{
+                                    Text("Sign Up").foregroundColor(.white).fontWeight(.bold).font(.title3)
+                                }
+                            }
+                        )
+                    }).alert(isPresented: $showAlert){
+                        var title = ""
+                        var msg = ""
+                        if(!kerbMeetsLen) {
+                            title = "Invalid Kerb"
+                            msg = "Kerb must be between 3 and 8 characters"
+                        }
+                        else if(!pwMeetsLen || !includesUppercase || !includesNumber || !includesSymbol){
+                            title = "Invalid Password"
+                            msg = "Check password requirements"
+                        }
+                        else{
+                            title = "Passwords don't match"
+                        }
+                        
+                        return Alert(
+                            title: Text(title),
+                            message: Text(msg)
+                        )
                     }
-                    else if(!pwMeetsLen || !includesUppercase || !includesNumber || !includesSymbol){
-                        title = "Invalid Password"
-                        msg = "Check password requirements"
-                    }
-                    else{
-                        title = "Passwords don't match"
-                    }
-                    
-                    return Alert(
-                        title: Text(title),
-                        message: Text(msg)
-                    )
                 }
-            }
-                .navigationTitle("Create Account").toolbar {
+                .toolbar {
                     ToolbarItemGroup() {
                         Button("Cancel",
                                action: { showSignupSheet.toggle() })
                     }
                 }
+            }.navigationTitle("Create Account")
         }
     }
 }

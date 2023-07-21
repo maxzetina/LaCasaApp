@@ -20,14 +20,33 @@ struct Login: View {
     
     @State var showSignupSheet: Bool = false
     
+    @FocusState var isKerbInputActive: Bool
+    @FocusState var isPwInputActive: Bool
+
 
     var body: some View {
         VStack{
             Image("LSImageA")
             
-            KerbTextField(kerb: $kerb)
+            KerbTextField(kerb: $kerb).toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+
+                    Button("Done") {
+                        if isKerbInputActive {
+                           isKerbInputActive = false
+                            isPwInputActive = true
+                       } else {
+                           isPwInputActive = false
+                       }
+                    }
+                }
+            }
+            .focused($isKerbInputActive)
+
             
             PasswordTextField(password: $password)
+            .focused($isPwInputActive)
         
            
             Button("Forgot Password?"){
