@@ -28,6 +28,8 @@
 		1B89D6492A689D3B008C5976 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6482A689D3B008C5976 /* User.swift */; };
 		1B89D64B2A68E20C008C5976 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D64A2A68E20C008C5976 /* Home.swift */; };
 		1B89D64D2A69C471008C5976 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D64C2A69C471008C5976 /* SignUp.swift */; };
+		1B89D6502A6A1A4E008C5976 /* KerbTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D64F2A6A1A4E008C5976 /* KerbTextField.swift */; };
+		1B89D6522A6A1A61008C5976 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		1B89D6482A689D3B008C5976 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1B89D64A2A68E20C008C5976 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		1B89D64C2A69C471008C5976 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
+		1B89D64F2A6A1A4E008C5976 /* KerbTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerbTextField.swift; sourceTree = "<group>"; };
+		1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,18 +177,28 @@
 		1B89D6352A45290E008C5976 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1B89D64E2A6A1995008C5976 /* Chores */,
 				1B89D6022A4282D9008C5976 /* ContentView.swift */,
 				1B89D64A2A68E20C008C5976 /* Home.swift */,
-				1B89D6362A452ABA008C5976 /* ChoresView.swift */,
-				1B89D6422A4D18EB008C5976 /* ChoresDetail.swift */,
-				1B89D6402A47FC06008C5976 /* ChoreRow.swift */,
-				1B89D63E2A47F30E008C5976 /* ChoresIntro.swift */,
 				1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */,
 				1B89D6382A452ADB008C5976 /* SavesView.swift */,
 				1B89D6462A688BAD008C5976 /* Login.swift */,
+				1B89D64F2A6A1A4E008C5976 /* KerbTextField.swift */,
+				1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */,
 				1B89D64C2A69C471008C5976 /* SignUp.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		1B89D64E2A6A1995008C5976 /* Chores */ = {
+			isa = PBXGroup;
+			children = (
+				1B89D6422A4D18EB008C5976 /* ChoresDetail.swift */,
+				1B89D63E2A47F30E008C5976 /* ChoresIntro.swift */,
+				1B89D6402A47FC06008C5976 /* ChoreRow.swift */,
+				1B89D6362A452ABA008C5976 /* ChoresView.swift */,
+			);
+			path = Chores;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,6 +333,7 @@
 			files = (
 				1B89D62C2A436017008C5976 /* Chore.swift in Sources */,
 				1B89D62E2A43626E008C5976 /* ModelData.swift in Sources */,
+				1B89D6522A6A1A61008C5976 /* PasswordTextField.swift in Sources */,
 				1B89D6472A688BAD008C5976 /* Login.swift in Sources */,
 				1B89D63D2A4646CF008C5976 /* LoadingSpinner.swift in Sources */,
 				1B89D6302A43DF70008C5976 /* SaveRequest.swift in Sources */,
@@ -328,6 +343,7 @@
 				1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */,
 				1B89D63B2A45E909008C5976 /* Save.swift in Sources */,
 				1B89D6412A47FC06008C5976 /* ChoreRow.swift in Sources */,
+				1B89D6502A6A1A4E008C5976 /* KerbTextField.swift in Sources */,
 				1B89D6392A452ADB008C5976 /* SavesView.swift in Sources */,
 				1B89D6012A4282D9008C5976 /* LaCasaApp.swift in Sources */,
 				1B89D64D2A69C471008C5976 /* SignUp.swift in Sources */,

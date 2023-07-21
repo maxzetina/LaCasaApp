@@ -25,39 +25,9 @@ struct Login: View {
         VStack{
             Image("LSImageA")
             
-            RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(.gray).opacity(0.25).overlay(
-                HStack{
-                    Image(systemName: "person.fill").padding(.leading)
-                    
-                    TextField("kerb", text: $kerb)   .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                        .padding(.leading, 4.0)
-                }
-            ).padding(.bottom, 4.0)
+            KerbTextField(kerb: $kerb)
             
-            RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(.gray).opacity(0.25).overlay(
-                HStack{
-                    Image(systemName: "lock.fill").padding(.leading)
-                    
-                    if(passwordVisible){
-                        TextField("password", text: $password)   .disableAutocorrection(true)
-                            .autocapitalization(.none)
-                            .padding(.leading, 4.0)
-                    }
-                    else{
-                        SecureField("password", text: $password)   .disableAutocorrection(true)
-                            .autocapitalization(.none)
-                            .padding(.leading, 4.0)
-                    }
-                    
-                    Button(action: {
-                        passwordVisible.toggle()
-                    }, label: {
-                        Image(systemName: passwordVisible ? "eye.slash.fill" : "eye.fill").foregroundColor(.gray)
-                        
-                    }).padding(.trailing)
-                }
-            ).padding(.bottom, 4.0)
+            PasswordTextField(password: $password)
         
            
             Button("Forgot Password?"){
@@ -79,7 +49,7 @@ struct Login: View {
                     }
                 }
             }, label: {
-                RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(Color("LoginButtonColor")).overlay(
+                RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(Color("LoginButtonColor")).shadow(radius: 10).overlay(
                     
                     VStack{
                         if(loginPressed){

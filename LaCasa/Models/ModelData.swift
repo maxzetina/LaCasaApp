@@ -151,4 +151,26 @@ class ModelData: ObservableObject {
         }
         return false
     }
+    
+    func signup(kerb: String, password: String) async {
+        let inputtedPasswordData = Data(password.utf8)
+        let hashedInput = SHA512.hash(data: inputtedPasswordData).compactMap { String(format: "%02x", $0) }.joined()
+        
+        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": hashedInput]) else {
+            print("Failed to encode request")
+            return
+        }
+        let endpoint = "/api/signup"
+        
+        let url = URL(string: baseURL + endpoint)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        do {
+            // (data, response)
+            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
+        } catch {
+            print("Request failed.")
+        }
+    }
 }
