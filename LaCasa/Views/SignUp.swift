@@ -29,6 +29,7 @@ struct SignUp: View {
     
     @State var signUpPressed: Bool = false
     
+    @FocusState var isKerbInputActive: Bool
     @FocusState var isPwInputActive: Bool
     @FocusState var isConfirmPwInputActive: Bool
 
@@ -41,7 +42,7 @@ struct SignUp: View {
             ScrollView(showsIndicators: false){
                 Spacer().frame(height: 150)
                 VStack(alignment: .leading){
-                    KerbTextField(kerb: $kerb)
+                    KerbTextField(kerb: $kerb).focused($isKerbInputActive)
                     
                     Spacer().frame(height: 25)
                     
@@ -60,11 +61,16 @@ struct SignUp: View {
                         includesUppercase = containsUppercase(text: newValue)
                         includesNumber = containsNumber(text: newValue)
                         includesSymbol = containsSymbol(text: newValue)
+                        
+                        passwordsMatch = confirmedPassword == newValue
                     }.toolbar {
                         ToolbarItemGroup(placement: .keyboard) {
                             Spacer()
 
                             Button("Done") {
+                                if isKerbInputActive {
+                                    isKerbInputActive = false
+                                }
                                 if isPwInputActive {
                                    isPwInputActive = false
                                     isConfirmPwInputActive = true
