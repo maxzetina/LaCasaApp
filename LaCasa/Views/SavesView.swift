@@ -10,42 +10,81 @@ import CryptoKit
 
 struct SavesView: View {
     @EnvironmentObject var modelData: ModelData
-    @State private var date = Date()
-    var a = Data("lacasa2".utf8)
+    @State private var savesDate = Date()
+    @State var dinnerPushedAlert: Bool = false
+    @State var showRequestSaveSheet: Bool = false
+    
+//    var a = Data("lacasa2".utf8)
 
     var body: some View {
-        VStack{
-            //saves list for the day
-            ForEach(modelData.saves, id: \.name) { save in
-                Text(save.name)
-            }
-            
+        //saves list for the day
+        NavigationView{
+
+                List{
+                    Section{
+                        HStack{
+                            Text("On:").fontWeight(.semibold)
+                            Spacer()
+                            Text("\(savesDate.formatted(.dateTime.day().month().weekday()))").font(.title3).foregroundColor(.red)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "calendar").overlay(
+                                DatePicker(
+                                    "",
+                                    selection: $savesDate,
+                                    displayedComponents: [.date]
+                                ).padding().labelsHidden().blendMode(.destinationOver)
+                            )
+                        }
+                    }
+                    
+                    ForEach(modelData.saves) { save in
+                        SavesRow(save: save).deleteDisabled(save.name == "TestApp3")//current signed in kerb
+                    }.onDelete(perform: deleteSave)
+                
+                }.navigationTitle("Saves")
+                .toolbar{
+                    ToolbarItemGroup() {
+                            Button(action:
+                            {
+                                dinnerPushedAlert.toggle()
+                                
+                            }, label: { Image(systemName: "clock") })
+                            .alert(isPresented: $dinnerPushedAlert){
+                                Alert(title: Text("Push Dinner?"),
+                                      message: Text("This will send a message in slack and an email"),
+                                      primaryButton: .destructive(Text("Cancel")),
+                                      secondaryButton: .default(Text("Yes"))
+                                      {
+                                        Task {
+                                            await modelData.pushDinner()
+                                        }
+                                })
+                            }
+                            
+                            Button(action: {
+                                showRequestSaveSheet.toggle()
+                            }, label: { Image(systemName: "plus") }).sheet(isPresented: $showRequestSaveSheet){
+                                RequestSave(showRequstSaveSheet: $showRequestSaveSheet)
+                            }
+                        }
+                    }
+
 //            let _ = print(SHA512.hash(data: a).compactMap { String(format: "%02x", $0) }.joined())
-
-            DatePicker(
-                "Start Date",
-                selection: $date,
-                displayedComponents: [.date]
-            ).padding()
-
-            //name, day, request - all str
-            //name will have to be dropdown select, request textbox
-            Button("Request Save") {
-                Task {
-                    await modelData.requestSave(date: date)
-                }
-            }
-            .padding()
-            Button("Push Dinner") {
-                Task {
-                    await modelData.pushDinner()
-                }
-            }
-            
+//
         }.onAppear{
             modelData.getSaves()
         }
     }
+}
+
+func deleteSave(at offsets: IndexSet) {
+    for index in offsets{
+        print(index)
+    }
+
+//    let _ = print(offsets)
 }
 
 struct SavesView_Previews: PreviewProvider {

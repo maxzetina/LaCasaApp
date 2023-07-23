@@ -84,7 +84,7 @@ class ModelData: ObservableObject {
         dateFormatter.dateFormat = "YYYY-MM-dd"
         let stringDate = dateFormatter.string(from: date)
 
-        let saveRequest: SaveRequest = SaveRequest(name: "TestApp5", day: stringDate, request: "did this work?")
+        let saveRequest: SaveRequest = SaveRequest(name: "TestApp4", day: stringDate, request: "did this work?")
         
         guard let encoded = try? JSONEncoder().encode(saveRequest) else {
             print("Failed to encode request")
@@ -100,7 +100,7 @@ class ModelData: ObservableObject {
         do {
             // (data, response)
             let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
-            self.saves.append(Save(name: saveRequest.name, request: saveRequest.request))
+//            self.saves.append(Save(id: 19, name: saveRequest.name, request: saveRequest.request))
         } catch {
             print("Request failed.")
         }

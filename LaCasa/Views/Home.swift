@@ -11,9 +11,15 @@ struct Home: View {
     @Binding var isLoggedIn: Bool
     var kerb: String
     
+    @State var welcomeAnimation: Bool = true
+    @State var viewAnimation: Bool = true
+    
     var body: some View {
         VStack{
-            Text(kerb)
+            Text("Welcome \(kerb)")
+                .font(.title)
+            
+            
             Button("Logout"){
                 isLoggedIn = false
             }
