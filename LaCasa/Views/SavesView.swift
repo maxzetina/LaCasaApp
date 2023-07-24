@@ -14,12 +14,8 @@ struct SavesView: View {
     @State var dinnerPushedAlert: Bool = false
     @State var showRequestSaveSheet: Bool = false
     
-//    var a = Data("lacasa2".utf8)
-
     var body: some View {
-        //saves list for the day
         NavigationView{
-
                 List{
                     Section{
                         HStack{
@@ -34,13 +30,15 @@ struct SavesView: View {
                                     "",
                                     selection: $savesDate,
                                     displayedComponents: [.date]
-                                ).padding().labelsHidden().blendMode(.destinationOver)
+                                ).padding().labelsHidden().blendMode(.destinationOver).onChange(of: savesDate){ newDate in
+                                    modelData.getSaves(date: newDate)
+                                }
                             )
                         }
                     }
                     
                     ForEach(modelData.saves) { save in
-                        SavesRow(save: save).deleteDisabled(save.name == "TestApp3")//current signed in kerb
+                        SavesRow(save: save).deleteDisabled(save.kerb != "TestApp3")//current signed in kerb
                     }.onDelete(perform: deleteSave)
                 
                 }.navigationTitle("Saves")
@@ -57,10 +55,11 @@ struct SavesView: View {
                                       primaryButton: .destructive(Text("Cancel")),
                                       secondaryButton: .default(Text("Yes"))
                                       {
-                                        Task {
-                                            await modelData.pushDinner()
-                                        }
-                                })
+                                          Task {
+                                              await modelData.pushDinner()
+                                           }
+                                       }
+                                )
                             }
                             
                             Button(action: {
@@ -70,11 +69,8 @@ struct SavesView: View {
                             }
                         }
                     }
-
-//            let _ = print(SHA512.hash(data: a).compactMap { String(format: "%02x", $0) }.joined())
-//
         }.onAppear{
-            modelData.getSaves()
+            modelData.getSaves(date: savesDate)
         }
     }
 }

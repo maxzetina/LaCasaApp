@@ -49,8 +49,10 @@ class ModelData: ObservableObject {
         dataTask.resume()
     }
     
-    func getSaves() {
-        let endpoint = "/api/saves"
+    func getSaves(date: Date) {
+        let stringDate = dateToString(date: date)
+
+        let endpoint = "/api/saves?day=\(stringDate)"
         
         guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
 
@@ -79,12 +81,10 @@ class ModelData: ObservableObject {
         dataTask.resume()
     }
     
-    func requestSave(date: Date) async {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        let stringDate = dateFormatter.string(from: date)
+    func requestSave(kerb: String, date: Date, request: String) async {
+        let stringDate = dateToString(date: date)
 
-        let saveRequest: SaveRequest = SaveRequest(name: "TestApp4", day: stringDate, request: "did this work?")
+        let saveRequest: SaveRequest = SaveRequest(kerb: "zetina", day: stringDate, request: request)
         
         guard let encoded = try? JSONEncoder().encode(saveRequest) else {
             print("Failed to encode request")
@@ -126,10 +126,9 @@ class ModelData: ObservableObject {
     }
     
     func handleLogin(kerb: String, password: String) async -> Bool {
-        let inputtedPasswordData = Data(password.utf8)
-        let hashedInput = SHA512.hash(data: inputtedPasswordData).compactMap { String(format: "%02x", $0) }.joined()
+        let encryptedInput = encryptString(text: password)
         
-        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": hashedInput]) else {
+        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": encryptedInput]) else {
             print("Failed to encode request")
             return false
         }
@@ -153,10 +152,9 @@ class ModelData: ObservableObject {
     }
     
     func signup(kerb: String, password: String) async {
-        let inputtedPasswordData = Data(password.utf8)
-        let hashedInput = SHA512.hash(data: inputtedPasswordData).compactMap { String(format: "%02x", $0) }.joined()
+        let encryptedPassword = encryptString(text: password)
         
-        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": hashedInput]) else {
+        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": encryptedPassword]) else {
             print("Failed to encode request")
             return
         }
@@ -172,5 +170,20 @@ class ModelData: ObservableObject {
         } catch {
             print("Request failed.")
         }
+    }
+    
+    func encryptString(text: String) -> String {
+        let inputtedTextData = Data(text.utf8)
+        let hashedInput = SHA512.hash(data: inputtedTextData).compactMap { String(format: "%02x", $0) }.joined()
+        return hashedInput
+    }
+    
+    // returns date as YYYY-MM-dd
+    func dateToString(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        let stringDate = dateFormatter.string(from: date)
+        
+        return stringDate
     }
 }

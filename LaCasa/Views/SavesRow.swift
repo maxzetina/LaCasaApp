@@ -15,9 +15,9 @@ struct SavesRow: View {
     var body: some View {
         HStack(alignment: .top){
             VStack(alignment: .leading){
-                Text(save.name).font(.headline)
+                Text("\(save.fname) \(save.lname)").font(.headline)
                 Spacer()
-                Text(save.restrict ?? "").font(.subheadline).opacity(0.7).italic()
+                Text(save.dietary_restriction).font(.subheadline).opacity(0.7).italic()
             }.frame(height: 50)
             
             Spacer()
@@ -37,6 +37,6 @@ struct SavesRow: View {
 
 struct SavesRow_Previews: PreviewProvider {
     static var previews: some View {
-        SavesRow(save: Save(id: 100, name: "Maxwell Zetina-Jimenez", request: "Extra chicken please", restrict: "Gluten Free"))
+        SavesRow(save: Save(id: 100, fname: "Maxwell", lname: "Zetina-Jimenez", kerb: "zetina", request: "Extra chicken please", dietary_restriction: "Gluten Free"))
     }
 }

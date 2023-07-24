@@ -8,7 +8,7 @@
 import Foundation
 
 struct SaveRequest: Hashable, Codable {
-    var name: String
+    var kerb: String
     var day: String
     var request: String
 }

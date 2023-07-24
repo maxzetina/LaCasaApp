@@ -9,7 +9,9 @@ import Foundation
 
 struct Save: Hashable, Codable, Identifiable {
     var id: Int
-    var name: String
+    var fname: String
+    var lname: String
+    var kerb: String
     var request: String
-    var restrict: String?
+    var dietary_restriction: String
 }
