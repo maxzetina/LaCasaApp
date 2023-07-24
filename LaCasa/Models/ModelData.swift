@@ -14,6 +14,7 @@ class ModelData: ObservableObject {
     @Published var currentTeam: Int = 0
     @Published var loadingChores: Bool = true
     @Published var saves: [Save] = []
+    @Published var kerb: String = ""
         
     let baseURL: String = "https://la-casa-app-server.vercel.app"
 

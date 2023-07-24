@@ -9,19 +9,22 @@ import SwiftUI
 
 struct Home: View {
     @Binding var isLoggedIn: Bool
-    var kerb: String
+    @Binding var kerb: String
     
+    @EnvironmentObject var modelData: ModelData
     @State var welcomeAnimation: Bool = true
     @State var viewAnimation: Bool = true
     
     var body: some View {
         VStack{
-            Text("Welcome \(kerb)")
+            Text("Welcome \(modelData.kerb)")
                 .font(.title)
             
             
             Button("Logout"){
                 isLoggedIn = false
+                kerb = ""
+                modelData.kerb = ""
             }
         }
     }
@@ -29,6 +32,6 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home(isLoggedIn: .constant(true), kerb: "KERB")
+        Home(isLoggedIn: .constant(true), kerb: .constant("KERB")).environmentObject(ModelData())
     }
 }

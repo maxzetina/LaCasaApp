@@ -38,7 +38,7 @@ struct SavesView: View {
                     }
                     
                     ForEach(modelData.saves) { save in
-                        SavesRow(save: save).deleteDisabled(save.kerb != "TestApp3")//current signed in kerb
+                        SavesRow(save: save).deleteDisabled(save.kerb != modelData.kerb)
                     }.onDelete(perform: deleteSave)
                 
                 }.navigationTitle("Saves")

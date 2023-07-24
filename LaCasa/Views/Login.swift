@@ -62,6 +62,7 @@ struct Login: View {
                     isLoggedIn = await modelData.handleLogin(kerb: kerb, password: password)
                     if(isLoggedIn){
                         user = kerb
+                        modelData.kerb = kerb
                     }
                     else{
                         loginPressed.toggle()
