@@ -38,7 +38,8 @@ struct SavesView: View {
                     }
                     
                     ForEach(modelData.saves) { save in
-                        SavesRow(save: save).deleteDisabled(save.kerb != modelData.kerb)
+                        let _ = print(save.kerb)
+                        SavesRow(save: save).deleteDisabled(save.kerb == "4")//modelData.user.kerb)
                     }.onDelete(perform: deleteSave)
                 
                 }.navigationTitle("Saves")

@@ -34,7 +34,7 @@ struct ContentView: View {
                             Label("Saves", systemImage: "fork.knife")
                         }
                 }.onAppear{
-                    modelData.kerb = kerb
+                    modelData.getUser(kerb: kerb)
                 }
             }
         }

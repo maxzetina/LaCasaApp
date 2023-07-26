@@ -14,7 +14,8 @@ class ModelData: ObservableObject {
     @Published var currentTeam: Int = 0
     @Published var loadingChores: Bool = true
     @Published var saves: [Save] = []
-    @Published var kerb: String = ""
+    @Published var user: User = User.default
+    @Published var people: [User] = []
         
     let baseURL: String = "https://la-casa-app-server.vercel.app"
 
@@ -82,6 +83,7 @@ class ModelData: ObservableObject {
         dataTask.resume()
     }
     
+    //to fix
     func requestSave(kerb: String, date: Date, request: String) async {
         let stringDate = dateToString(date: date)
 
@@ -151,11 +153,14 @@ class ModelData: ObservableObject {
         }
         return false
     }
-    
-    func signup(kerb: String, password: String) async {
+
+    func signup(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String, resident: Int) async {
+        
         let encryptedPassword = encryptString(text: password)
         
-        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": encryptedPassword]) else {
+        let newUser = User(fname: fname, lname: lname, kerb: kerb, year: year, major: major, dietary_restriction: dietary_restriction, password: encryptedPassword, resident: resident)
+        
+        guard let encoded = try? JSONEncoder().encode(newUser) else {
             print("Failed to encode request")
             return
         }
@@ -171,6 +176,76 @@ class ModelData: ObservableObject {
         } catch {
             print("Request failed.")
         }
+    }
+    
+    //nullable password, add ? to password attr. in User model
+    func getPeople() {
+        let endpoint = "/api/people"
+        
+        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
+
+        let urlRequest = URLRequest(url: url)
+
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse else { return }
+
+            if response.statusCode == 200 {
+                guard let data = data else { return }
+                DispatchQueue.main.async {
+                    do {
+                        let decodedPeople = try JSONDecoder().decode([User].self, from: data)
+                        self.people = decodedPeople
+                    } catch let error {
+                        print("Error decoding: ", error)
+                    }
+                }
+            }
+        }
+        dataTask.resume()
+    }
+    
+    func getUser(kerb: String) {
+        let endpoint = "/api/user?kerb=\(kerb)"
+
+        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
+
+        let urlRequest = URLRequest(url: url)
+
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse else { return }
+
+            if response.statusCode == 200 {
+                guard let data = data else { return }
+                DispatchQueue.main.async {
+                    do {
+                        let decodedUser = try JSONDecoder().decode([User].self, from: data)
+                        if(decodedUser.isEmpty){
+                            self.user.kerb = kerb
+                        }
+                        else{
+                            self.user = decodedUser[0]
+                        }
+                    } catch let error {
+                        print("Error decoding: ", error)
+                    }
+                }
+            }
+        }
+        dataTask.resume()
+    }
+    
+    func resetUser() {
+        self.user = User.default
     }
     
     func encryptString(text: String) -> String {

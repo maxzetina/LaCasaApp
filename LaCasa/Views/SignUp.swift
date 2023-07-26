@@ -110,7 +110,8 @@ struct SignUp: View {
                             else{
                                 signUpPressed.toggle()
                                 
-                                await modelData.signup(kerb: kerb, password: password)
+                                //need route for new person signup and resident signup - only edit password column if resident checkbox
+//                                await modelData.signup(fname: String, lname: <#T##String#>, kerb: kerb, year: <#T##Int#>, major: <#T##String#>, password: password, resident: <#T##Int#>)
                                 showSignupSheet.toggle()
                                 signUpPressed.toggle()
                             }

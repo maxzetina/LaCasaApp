@@ -11,6 +11,7 @@ struct RequestSave: View {
     @Binding var showRequstSaveSheet: Bool
     
     @EnvironmentObject var modelData: ModelData
+    @State var namePicked = ""
     @State private var date = Date()
 
     var body: some View {
@@ -36,6 +37,8 @@ struct RequestSave: View {
                            action: { showRequstSaveSheet.toggle() })
                 }
             }
+        }.onAppear{
+            modelData.getPeople()
         }
     }
 }

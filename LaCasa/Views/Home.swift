@@ -12,19 +12,17 @@ struct Home: View {
     @Binding var kerb: String
     
     @EnvironmentObject var modelData: ModelData
-    @State var welcomeAnimation: Bool = true
-    @State var viewAnimation: Bool = true
     
     var body: some View {
         VStack{
-            Text("Welcome \(modelData.kerb)")
+            Text("Welcome \(modelData.user.kerb)")
                 .font(.title)
             
             
             Button("Logout"){
                 isLoggedIn = false
                 kerb = ""
-                modelData.kerb = ""
+                modelData.resetUser()
             }
         }
     }
