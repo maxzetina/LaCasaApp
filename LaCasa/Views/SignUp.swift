@@ -25,7 +25,7 @@ struct SignUp: View {
     @State var passwordVisible: Bool = false
     @State var showAlert: Bool = false
     
-    @State var validKerb: Bool = true
+    @State var validKerb: Bool = false
     @State var validFname: Bool = false
     @State var validLname: Bool = false
     @State var validYear: Bool = false
@@ -47,6 +47,8 @@ struct SignUp: View {
     
     @FocusState var isPwInputActive: Bool
     @FocusState var isConfirmPwInputActive: Bool
+    
+    @State var accountExists: Bool = false
 
     
     let bulletPoint: String = "\u{2022}"
@@ -172,14 +174,17 @@ struct SignUp: View {
                             let validPw = pwMeetsLen && includesUppercase && includesNumber && includesSymbol && passwordsMatch
                             
                             if(selectedRole == Role.resident){
-                                if(!validPw){
+                                let residentKerb = modelData.residents[residentIndex].kerb
+                                
+                                accountExists = await modelData.doesAccountExist(kerb: residentKerb)
+                                
+                                if(!validPw || accountExists){
                                     showAlert.toggle()
                                 }
                                 
                                 else{
                                     signUpPressed.toggle()
                                     
-                                    let residentKerb = modelData.residents[residentIndex].kerb
                                     await modelData.signupResident(kerb: residentKerb, password: password)
                                     
                                     showSignupSheet.toggle()
@@ -194,7 +199,9 @@ struct SignUp: View {
                                 validLname = checkName(text: lname)
                                 validYear = checkYear(text: year)
                                 
-                                if(!(validKerb && validFname && validLname && validYear && validPw)){
+                                accountExists = await modelData.doesAccountExist(kerb: kerb)
+                                
+                                if(!(validKerb && validFname && validLname && validYear && validPw) || accountExists){
                                     showAlert.toggle()
                                 }
                                 else{
@@ -223,19 +230,23 @@ struct SignUp: View {
                     }).alert(isPresented: $showAlert){
                         var title = ""
                         var msg = ""
-                        if(!validKerb) {
+                        if(accountExists){
+                            title = "Account Already Exists"
+                            msg = "Please reset your password if this is a mistake"
+                        }
+                        else if(!validKerb && selectedRole == Role.nonresident) {
                             title = "Invalid Kerb"
                             msg = "Kerb must be 3-8 lowercase, alphanumeric characters (including underscores) and cannot start with a digit."
                         }
-                        else if(!validFname){
+                        else if(!validFname && selectedRole == Role.nonresident){
                             title = "Invalid First Name"
                             msg = "First name must not be empty or have special characters or numbers"
                         }
-                        else if(!validLname){
+                        else if(!validLname && selectedRole == Role.nonresident){
                             title = "Invalid Last Name"
                             msg = "Last name must not be empty or have special characters or numbers"
                         }
-                        else if(!validYear){
+                        else if(!validYear && selectedRole == Role.nonresident){
                             title = "Invalid Class Year"
                             msg = "Class year must be in the form 20XX"
                         }

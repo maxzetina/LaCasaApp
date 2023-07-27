@@ -201,6 +201,30 @@ class ModelData: ObservableObject {
         }
     }
     
+    func doesAccountExist(kerb: String) async -> Bool {
+        guard let encoded = try? JSONEncoder().encode(["kerb": kerb]) else {
+            print("Failed to encode request")
+            return false
+        }
+        
+        let endpoint = "/api/accountExists"
+        
+        let url = URL(string: baseURL + endpoint)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        do {
+            // (data, response)
+            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
+            let decodedResponse = try JSONDecoder().decode(Bool.self, from: data)
+
+            return decodedResponse
+        } catch {
+            print("Request failed.")
+        }
+        return false
+    }
+    
     func getResidents() {
         let endpoint = "/api/residents"
         
