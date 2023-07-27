@@ -12,6 +12,7 @@ struct InputTextField: View {
     var width: CGFloat = 300
     @Binding var input: String
     var img: Image?
+    var autocapitalize = false
     
     var body: some View {
         RoundedRectangle(cornerRadius: 10).frame(width: width, height: 50).foregroundColor(.gray).opacity(0.25).overlay(
@@ -19,9 +20,15 @@ struct InputTextField: View {
                 if(img != nil){
                     img.padding(.leading)
                 }
-                TextField(placeholderText, text: $input)   .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                    .padding(.leading, img != nil ? 4.0 : 12.0)
+                if(autocapitalize){
+                    TextField(placeholderText, text: $input)   .disableAutocorrection(true)
+                        .padding(.leading, img != nil ? 4.0 : 12.0)
+                }
+                else{
+                    TextField(placeholderText, text: $input)   .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                        .padding(.leading, img != nil ? 4.0 : 12.0)
+                }
             }
         ).padding(.bottom, 4.0)
     }

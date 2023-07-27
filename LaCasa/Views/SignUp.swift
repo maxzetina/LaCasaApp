@@ -41,6 +41,12 @@ struct SignUp: View {
     @FocusState var isKerbInputActive: Bool
     @FocusState var isFnameInputActive: Bool
     @FocusState var isLnameInputActive: Bool
+    
+    @FocusState var isYearInputActive: Bool
+    @FocusState var isMajorInputActive: Bool
+    
+    @FocusState var isPwInputActive: Bool
+    @FocusState var isConfirmPwInputActive: Bool
 
     
     let bulletPoint: String = "\u{2022}"
@@ -82,6 +88,7 @@ struct SignUp: View {
                                 Button("Done") {
                                     if isKerbInputActive {
                                         isKerbInputActive = false
+                                        isFnameInputActive = true
                                     }
                                     if isFnameInputActive {
                                        isFnameInputActive = false
@@ -89,18 +96,34 @@ struct SignUp: View {
                                    } else {
                                        isLnameInputActive = false
                                    }
+                                    
+                                    if isYearInputActive {
+                                        isYearInputActive = false
+                                        isMajorInputActive = true
+                                    }
+                                    else {
+                                        isMajorInputActive = false
+                                    }
+                                    
+                                    if isPwInputActive {
+                                        isPwInputActive = false
+                                        isConfirmPwInputActive = true
+                                    }
+                                    else {
+                                        isConfirmPwInputActive = false
+                                    }
                                 }
                             }
                         }
-                        InputTextField(placeholderText: "First name", input: $fname).focused($isFnameInputActive)
-                        InputTextField(placeholderText: "Last name", input: $lname).focused($isLnameInputActive)
+                        InputTextField(placeholderText: "First name", input: $fname, autocapitalize: true).focused($isFnameInputActive)
+                        InputTextField(placeholderText: "Last name", input: $lname, autocapitalize: true).focused($isLnameInputActive)
                         
                         HStack{
-                            InputTextField(placeholderText: "Year", width: 125, input: $year, img: Image(systemName: "graduationcap.fill")).keyboardType(.numberPad)
+                            InputTextField(placeholderText: "Year", width: 125, input: $year, img: Image(systemName: "graduationcap.fill")).keyboardType(.numberPad).focused($isYearInputActive)
 
                             Spacer()
 
-                            InputTextField(placeholderText: "Course", width: 125, input: $major, img: Image(systemName: "text.book.closed.fill"))
+                            InputTextField(placeholderText: "Course", width: 125, input: $major, img: Image(systemName: "text.book.closed.fill")).focused($isMajorInputActive)
                         }.frame(width: 300)
                         
                         Spacer().frame(height: 25)
@@ -123,7 +146,7 @@ struct SignUp: View {
                         includesSymbol = containsSymbol(text: newValue)
                         
                         passwordsMatch = confirmedPassword == newValue
-                    }
+                    }.focused($isPwInputActive)
                     
                     RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(.gray).opacity(0.25).overlay(
                         HStack{
@@ -135,6 +158,7 @@ struct SignUp: View {
                                     
                                     passwordsMatch = password == newValue
                                 }
+                                .focused($isConfirmPwInputActive)
                         }
                     ).padding(.bottom, 4.0)
                     
