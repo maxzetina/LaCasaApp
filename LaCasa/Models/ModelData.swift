@@ -15,7 +15,7 @@ class ModelData: ObservableObject {
     @Published var loadingChores: Bool = true
     @Published var saves: [Save] = []
     @Published var user: User = User.default
-    @Published var people: [User] = []
+    @Published var residents: [User] = []
         
     let baseURL: String = "https://la-casa-app-server.vercel.app"
 
@@ -154,17 +154,18 @@ class ModelData: ObservableObject {
         return false
     }
 
-    func signup(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String, resident: Int) async {
+    func signupNonresident(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String) async {
         
         let encryptedPassword = encryptString(text: password)
-        
-        let newUser = User(fname: fname, lname: lname, kerb: kerb, year: year, major: major, dietary_restriction: dietary_restriction, password: encryptedPassword, resident: resident)
-        
+        let isResident = 0 //false
+
+        let newUser = User(fname: fname, lname: lname, kerb: kerb, year: year, major: major, dietary_restriction: dietary_restriction, password: encryptedPassword, resident: isResident)
+        print(newUser)
         guard let encoded = try? JSONEncoder().encode(newUser) else {
             print("Failed to encode request")
             return
         }
-        let endpoint = "/api/signup"
+        let endpoint = "/api/signupNonresident"
         
         let url = URL(string: baseURL + endpoint)!
         var request = URLRequest(url: url)
@@ -178,9 +179,30 @@ class ModelData: ObservableObject {
         }
     }
     
-    //nullable password, add ? to password attr. in User model
-    func getPeople() {
-        let endpoint = "/api/people"
+    func signupResident(kerb: String, password: String) async {
+        
+        let encryptedPassword = encryptString(text: password)
+                
+        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": encryptedPassword]) else {
+            print("Failed to encode request")
+            return
+        }
+        let endpoint = "/api/signupResident"
+        
+        let url = URL(string: baseURL + endpoint)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        do {
+            // (data, response)
+            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
+        } catch {
+            print("Request failed.")
+        }
+    }
+    
+    func getResidents() {
+        let endpoint = "/api/residents"
         
         guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
 
@@ -198,8 +220,8 @@ class ModelData: ObservableObject {
                 guard let data = data else { return }
                 DispatchQueue.main.async {
                     do {
-                        let decodedPeople = try JSONDecoder().decode([User].self, from: data)
-                        self.people = decodedPeople
+                        let decodedResidents = try JSONDecoder().decode([User].self, from: data)
+                        self.residents = decodedResidents
                     } catch let error {
                         print("Error decoding: ", error)
                     }

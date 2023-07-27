@@ -21,6 +21,7 @@ struct SavesView: View {
                         HStack{
                             Text("On:").fontWeight(.semibold)
                             Spacer()
+                            
                             Text("\(savesDate.formatted(.dateTime.day().month().weekday()))").font(.title3).foregroundColor(.red)
                             
                             Spacer()
@@ -70,7 +71,7 @@ struct SavesView: View {
                             }
                         }
                     }
-        }.onAppear{
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear{
             modelData.getSaves(date: savesDate)
         }
     }

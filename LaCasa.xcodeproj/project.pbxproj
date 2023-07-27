@@ -32,6 +32,7 @@
 		1B89D6522A6A1A61008C5976 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */; };
 		1B89D6552A6CBEEF008C5976 /* SavesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6542A6CBEEF008C5976 /* SavesRow.swift */; };
 		1B89D6572A6DD1C4008C5976 /* RequestSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6562A6DD1C4008C5976 /* RequestSave.swift */; };
+		1B89D6592A721923008C5976 /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6582A721923008C5976 /* InputTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		1B89D6542A6CBEEF008C5976 /* SavesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavesRow.swift; sourceTree = "<group>"; };
 		1B89D6562A6DD1C4008C5976 /* RequestSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSave.swift; sourceTree = "<group>"; };
+		1B89D6582A721923008C5976 /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				1B89D6542A6CBEEF008C5976 /* SavesRow.swift */,
 				1B89D6462A688BAD008C5976 /* Login.swift */,
 				1B89D64F2A6A1A4E008C5976 /* KerbTextField.swift */,
+				1B89D6582A721923008C5976 /* InputTextField.swift */,
 				1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */,
 				1B89D64C2A69C471008C5976 /* SignUp.swift */,
 			);
@@ -356,6 +359,7 @@
 				1B89D64D2A69C471008C5976 /* SignUp.swift in Sources */,
 				1B89D63F2A47F30E008C5976 /* ChoresIntro.swift in Sources */,
 				1B89D6372A452ABA008C5976 /* ChoresView.swift in Sources */,
+				1B89D6592A721923008C5976 /* InputTextField.swift in Sources */,
 				1B89D6552A6CBEEF008C5976 /* SavesRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

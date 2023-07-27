@@ -22,7 +22,12 @@ struct RequestSave: View {
                     selection: $date,
                     displayedComponents: [.date]
                 ).padding()
-
+//                Picker("", selection: $kerb){
+//                    ForEach(modelData.residents){
+//                        resident in
+//                        Text(resident.kerb)
+//                    }
+//                }
                 Button("Request Save") {
                     Task {
                         await modelData.requestSave(kerb: "zetina", date: date, request: "request")
@@ -38,7 +43,7 @@ struct RequestSave: View {
                 }
             }
         }.onAppear{
-            modelData.getPeople()
+//            modelData.getPeople()
         }
     }
 }

@@ -40,7 +40,7 @@ struct ChoresView: View {
                             }
                         }
                     }.navigationTitle("Chores")
-                }
+                }.navigationViewStyle(StackNavigationViewStyle())
             }
             
         }.onAppear{
