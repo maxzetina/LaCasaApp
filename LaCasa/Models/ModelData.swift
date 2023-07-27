@@ -160,7 +160,7 @@ class ModelData: ObservableObject {
         let isResident = 0 //false
 
         let newUser = User(fname: fname, lname: lname, kerb: kerb, year: year, major: major, dietary_restriction: dietary_restriction, password: encryptedPassword, resident: isResident)
-        print(newUser)
+        
         guard let encoded = try? JSONEncoder().encode(newUser) else {
             print("Failed to encode request")
             return
