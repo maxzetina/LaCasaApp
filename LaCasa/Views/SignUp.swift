@@ -25,7 +25,7 @@ struct SignUp: View {
     @State var passwordVisible: Bool = false
     @State var showAlert: Bool = false
     
-    @State var kerbMeetsLen: Bool = true
+    @State var validKerb: Bool = true
     @State var validFname: Bool = false
     @State var validLname: Bool = false
     @State var validYear: Bool = false
@@ -81,40 +81,7 @@ struct SignUp: View {
                         }.frame(width: 300).pickerStyle(.wheel)
                     }
                     else{
-                        InputTextField(placeholderText: "kerb", input: $kerb, img: Image(systemName: "person.fill")).focused($isKerbInputActive).toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Spacer()
-
-                                Button("Done") {
-                                    if isKerbInputActive {
-                                        isKerbInputActive = false
-                                        isFnameInputActive = true
-                                    }
-                                    if isFnameInputActive {
-                                       isFnameInputActive = false
-                                        isLnameInputActive = true
-                                   } else {
-                                       isLnameInputActive = false
-                                   }
-                                    
-                                    if isYearInputActive {
-                                        isYearInputActive = false
-                                        isMajorInputActive = true
-                                    }
-                                    else {
-                                        isMajorInputActive = false
-                                    }
-                                    
-                                    if isPwInputActive {
-                                        isPwInputActive = false
-                                        isConfirmPwInputActive = true
-                                    }
-                                    else {
-                                        isConfirmPwInputActive = false
-                                    }
-                                }
-                            }
-                        }
+                        InputTextField(placeholderText: "kerb", input: $kerb, img: Image(systemName: "person.fill")).focused($isKerbInputActive)
                         InputTextField(placeholderText: "First name", input: $fname, autocapitalize: true).focused($isFnameInputActive)
                         InputTextField(placeholderText: "Last name", input: $lname, autocapitalize: true).focused($isLnameInputActive)
                         
@@ -146,7 +113,40 @@ struct SignUp: View {
                         includesSymbol = containsSymbol(text: newValue)
                         
                         passwordsMatch = confirmedPassword == newValue
-                    }.focused($isPwInputActive)
+                    }.focused($isPwInputActive).toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
+
+                            Button("Done") {
+                                if isKerbInputActive {
+                                    isKerbInputActive = false
+                                    isFnameInputActive = true
+                                }
+                                if isFnameInputActive {
+                                   isFnameInputActive = false
+                                    isLnameInputActive = true
+                               } else {
+                                   isLnameInputActive = false
+                               }
+                                
+                                if isYearInputActive {
+                                    isYearInputActive = false
+                                    isMajorInputActive = true
+                                }
+                                else {
+                                    isMajorInputActive = false
+                                }
+                                
+                                if isPwInputActive {
+                                    isPwInputActive = false
+                                    isConfirmPwInputActive = true
+                                }
+                                else {
+                                    isConfirmPwInputActive = false
+                                }
+                            }
+                        }
+                    }
                     
                     RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(.gray).opacity(0.25).overlay(
                         HStack{
@@ -189,13 +189,12 @@ struct SignUp: View {
                             
                             
                             if(selectedRole == Role.nonresident){
-                                kerbMeetsLen = 3 <= kerb.count && kerb.count <= 8
-                                
+                                validKerb = checkKerb(text: kerb)
                                 validFname = checkName(text: fname)
                                 validLname = checkName(text: lname)
                                 validYear = checkYear(text: year)
                                 
-                                if(!(kerbMeetsLen && validFname && validLname && validYear && validPw)){
+                                if(!(validKerb && validFname && validLname && validYear && validPw)){
                                     showAlert.toggle()
                                 }
                                 else{
@@ -224,9 +223,9 @@ struct SignUp: View {
                     }).alert(isPresented: $showAlert){
                         var title = ""
                         var msg = ""
-                        if(!kerbMeetsLen) {
+                        if(!validKerb) {
                             title = "Invalid Kerb"
-                            msg = "Kerb must be between 3 and 8 characters"
+                            msg = "Kerb must be 3-8 lowercase, alphanumeric characters (including underscores) and cannot start with a digit."
                         }
                         else if(!validFname){
                             title = "Invalid First Name"
@@ -267,6 +266,19 @@ struct SignUp: View {
     }
 }
 
+func checkKerb(text: String) -> Bool {
+    if(text.isEmpty || text.count > 8 || text.count < 3  ) { return false }
+
+    guard let kerbRegex = try? Regex("[a-z_][a-z0-9_]+") else {return false}
+    if let match = text.wholeMatch(of: kerbRegex) {
+        let matchedString = match.output[0].substring ?? "not found"
+        if matchedString == text {
+            return true
+        }
+    }
+    return false
+}
+
 func containsUppercase(text: String) -> Bool {
     guard let uppercaseRegex = try? Regex("[A-Z]+") else { return false }
     return text.contains(uppercaseRegex)
@@ -283,12 +295,16 @@ func containsSymbol(text: String) -> Bool {
 }
 
 func checkName(text: String) -> Bool {
-    for char in text {
-        if(!char.isLetter){
-            return false
+    if(text.isEmpty) { return false }
+
+    guard let nameRegex = try? Regex("^[A-Za-z][A-Za-z'-]*([ A-Za-z][A-Za-z'-]+)*") else { return false }
+    if let match = text.wholeMatch(of: nameRegex) {
+        let matchedString = match.output[0].substring ?? "not found"
+        if matchedString == text {
+            return true
         }
     }
-    return true
+    return false
 }
 
 func checkYear(text: String) -> Bool {
