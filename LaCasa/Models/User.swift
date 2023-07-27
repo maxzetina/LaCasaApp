@@ -7,7 +7,17 @@
 
 import Foundation
 
-struct User: Hashable, Codable {
+struct User: Hashable, Codable, Identifiable {
+    var id: Int?
+    var fname: String
+    var lname: String
     var kerb: String
-    var password: String
+    var year: Int
+    var major: String
+    var dietary_restriction: String
+    var password: String?
+    var resident: Int
+    
+    static let `default` = User(id: 0, fname: "", lname: "", kerb: "", year: 0, major: "", dietary_restriction: "", password: "", resident: 0)
+
 }

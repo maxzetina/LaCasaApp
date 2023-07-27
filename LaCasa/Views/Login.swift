@@ -29,7 +29,7 @@ struct Login: View {
         VStack{
             Image("LSImageA")
             
-            KerbTextField(kerb: $kerb).toolbar {
+            InputTextField(placeholderText: "kerb", input: $kerb, img: Image(systemName: "person.fill")).toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
 
@@ -64,9 +64,10 @@ struct Login: View {
                     loginPressed.toggle()
                     
                     isLoggedIn = await modelData.handleLogin(kerb: kerb, password: password)
+                    
                     if(isLoggedIn){
                         user = kerb
-                        modelData.kerb = kerb
+                        modelData.getUser(kerb: kerb)
                     }
                     else{
                         loginPressed.toggle()

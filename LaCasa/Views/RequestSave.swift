@@ -11,6 +11,7 @@ struct RequestSave: View {
     @Binding var showRequstSaveSheet: Bool
     
     @EnvironmentObject var modelData: ModelData
+    @State var namePicked = ""
     @State private var date = Date()
 
     var body: some View {
@@ -21,7 +22,12 @@ struct RequestSave: View {
                     selection: $date,
                     displayedComponents: [.date]
                 ).padding()
-
+//                Picker("", selection: $kerb){
+//                    ForEach(modelData.residents){
+//                        resident in
+//                        Text(resident.kerb)
+//                    }
+//                }
                 Button("Request Save") {
                     Task {
                         await modelData.requestSave(kerb: "zetina", date: date, request: "request")
@@ -36,6 +42,8 @@ struct RequestSave: View {
                            action: { showRequstSaveSheet.toggle() })
                 }
             }
+        }.onAppear{
+//            modelData.getPeople()
         }
     }
 }

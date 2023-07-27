@@ -21,6 +21,7 @@ struct SavesView: View {
                         HStack{
                             Text("On:").fontWeight(.semibold)
                             Spacer()
+                            
                             Text("\(savesDate.formatted(.dateTime.day().month().weekday()))").font(.title3).foregroundColor(.red)
                             
                             Spacer()
@@ -38,7 +39,8 @@ struct SavesView: View {
                     }
                     
                     ForEach(modelData.saves) { save in
-                        SavesRow(save: save).deleteDisabled(save.kerb != modelData.kerb)
+                        let _ = print(save.kerb)
+                        SavesRow(save: save).deleteDisabled(save.kerb == "4")//modelData.user.kerb)
                     }.onDelete(perform: deleteSave)
                 
                 }.navigationTitle("Saves")
@@ -69,7 +71,7 @@ struct SavesView: View {
                             }
                         }
                     }
-        }.onAppear{
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear{
             modelData.getSaves(date: savesDate)
         }
     }
