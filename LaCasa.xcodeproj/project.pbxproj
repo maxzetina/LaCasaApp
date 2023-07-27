@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01E409642A6F59370010AF0E /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E409632A6F59370010AF0E /* ForgotPassword.swift */; };
 		1B89D6012A4282D9008C5976 /* LaCasaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6002A4282D9008C5976 /* LaCasaApp.swift */; };
 		1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6022A4282D9008C5976 /* ContentView.swift */; };
 		1B89D6052A4282DA008C5976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B89D6042A4282DA008C5976 /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01E409632A6F59370010AF0E /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
 		1B89D5FD2A4282D9008C5976 /* LaCasa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaCasa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B89D6002A4282D9008C5976 /* LaCasaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaCasaApp.swift; sourceTree = "<group>"; };
 		1B89D6022A4282D9008C5976 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				1B89D64F2A6A1A4E008C5976 /* KerbTextField.swift */,
 				1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */,
 				1B89D64C2A69C471008C5976 /* SignUp.swift */,
+				01E409632A6F59370010AF0E /* ForgotPassword.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				1B89D6492A689D3B008C5976 /* User.swift in Sources */,
 				1B89D64B2A68E20C008C5976 /* Home.swift in Sources */,
 				1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */,
+				01E409642A6F59370010AF0E /* ForgotPassword.swift in Sources */,
 				1B89D63B2A45E909008C5976 /* Save.swift in Sources */,
 				1B89D6412A47FC06008C5976 /* ChoreRow.swift in Sources */,
 				1B89D6502A6A1A4E008C5976 /* KerbTextField.swift in Sources */,
