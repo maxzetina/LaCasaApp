@@ -39,9 +39,14 @@ struct SavesView: View {
                     }
                     
                     ForEach(modelData.saves) { save in
-                        let _ = print(save.kerb)
-                        SavesRow(save: save).deleteDisabled(save.kerb == "4")//modelData.user.kerb)
-                    }.onDelete(perform: deleteSave)
+                        SavesRow(save: save).swipeActions{
+                            Button(role: .destructive) {
+                                 print("Deleting conversation")
+                             } label: {
+                                 Label("Delete", systemImage: "trash.fill")
+                             }.disabled(save.kerb != modelData.user.kerb)
+                        }
+                    }
                 
                 }.navigationTitle("Saves")
                 .toolbar{
@@ -70,7 +75,10 @@ struct SavesView: View {
                                 RequestSave(showRequstSaveSheet: $showRequestSaveSheet)
                             }
                         }
-                    }
+                }.refreshable {
+                    savesDate = Date()
+                    modelData.getSaves(date: savesDate)
+                }
         }.navigationViewStyle(StackNavigationViewStyle()).onAppear{
             modelData.getSaves(date: savesDate)
         }
