@@ -49,6 +49,7 @@ struct SignUp: View {
     @FocusState var isConfirmPwInputActive: Bool
     
     @State var accountExists: Bool = false
+    @State var validNonresident: Bool = true
 
     
     let bulletPoint: String = "\u{2022}"
@@ -88,7 +89,11 @@ struct SignUp: View {
                         InputTextField(placeholderText: "Last name", input: $lname, autocapitalize: true).focused($isLnameInputActive)
                         
                         HStack{
-                            InputTextField(placeholderText: "Year", width: 125, input: $year, img: Image(systemName: "graduationcap.fill")).keyboardType(.numberPad).focused($isYearInputActive)
+                            InputTextField(placeholderText: "Year", width: 125, input: $year, img: Image(systemName: "graduationcap.fill")).keyboardType(.numberPad).focused($isYearInputActive).onChange(of: year){ newYear in
+                                if newYear.count > 4 {
+                                    year = String(newYear.prefix(4))
+                                }
+                            }
 
                             Spacer()
 
@@ -201,7 +206,14 @@ struct SignUp: View {
                                 
                                 accountExists = await modelData.doesAccountExist(kerb: kerb)
                                 
-                                if(!(validKerb && validFname && validLname && validYear && validPw) || accountExists){
+                                validNonresident = true
+                                for resident in modelData.residents {
+                                    if resident.kerb == kerb {
+                                        validNonresident = false
+                                    }
+                                }
+                                                                
+                                if(!(validKerb && validFname && validLname && validYear && validPw) || accountExists || !validNonresident){
                                     showAlert.toggle()
                                 }
                                 else{
@@ -230,13 +242,17 @@ struct SignUp: View {
                     }).alert(isPresented: $showAlert){
                         var title = ""
                         var msg = ""
-                        if(accountExists){
-                            title = "Account Already Exists"
-                            msg = "Please reset your password if this is a mistake"
-                        }
-                        else if(!validKerb && selectedRole == Role.nonresident) {
+                        if(!validKerb && selectedRole == Role.nonresident){
                             title = "Invalid Kerb"
                             msg = "Kerb must be 3-8 lowercase, alphanumeric characters (including underscores) and cannot start with a digit."
+                        }
+                        else if(!validNonresident){
+                            title = "Account is a Resident"
+                            msg = "Please create a Resident Account"
+                        }
+                        else if(accountExists) {
+                            title = "Account Already Exists"
+                            msg = "Please reset your password if this is a mistake"
                         }
                         else if(!validFname && selectedRole == Role.nonresident){
                             title = "Invalid First Name"
