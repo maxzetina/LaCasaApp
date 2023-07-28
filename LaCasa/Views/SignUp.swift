@@ -246,7 +246,7 @@ struct SignUp: View {
                             title = "Invalid Kerb"
                             msg = "Kerb must be 3-8 lowercase, alphanumeric characters (including underscores) and cannot start with a digit."
                         }
-                        else if(!validNonresident){
+                        else if(!validNonresident && selectedRole == Role.nonresident){
                             title = "Account is a Resident"
                             msg = "Please create a Resident Account"
                         }
