@@ -38,14 +38,23 @@ struct SavesView: View {
                         }
                     }
                     
-                    ForEach(modelData.saves) { save in
-                        SavesRow(save: save).swipeActions{
-                            Button(role: .destructive) {
-                                 print("Deleting conversation")
-                             } label: {
-                                 Label("Delete", systemImage: "trash.fill")
-                             }.disabled(save.kerb != modelData.user.kerb)
+                    if(!modelData.saves.isEmpty){
+                        ForEach(modelData.saves) { save in
+                            SavesRow(save: save).swipeActions{
+                                Button(role: .destructive) {
+                                     print("Deleting conversation")
+                                 } label: {
+                                     Label("Delete", systemImage: "trash.fill")
+                                 }.disabled(save.kerb != modelData.user.kerb)
+                            }
                         }
+                    }
+                    else {
+                        HStack{
+                            Spacer()
+                            Text("There are no saves!").font(.title2)
+                            Spacer()
+                        }.listRowBackground(Color.clear)
                     }
                 
                 }.navigationTitle("Saves")
@@ -72,7 +81,7 @@ struct SavesView: View {
                             Button(action: {
                                 showRequestSaveSheet.toggle()
                             }, label: { Image(systemName: "plus") }).sheet(isPresented: $showRequestSaveSheet){
-                                RequestSave(showRequstSaveSheet: $showRequestSaveSheet)
+                                RequestSave(showRequestSaveSheet: $showRequestSaveSheet)
                             }
                         }
                 }.refreshable {
