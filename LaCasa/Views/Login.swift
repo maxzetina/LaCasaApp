@@ -63,7 +63,6 @@ struct Login: View {
                     
                     if(isLoggedIn){
                         user = kerb
-                        modelData.getUser(kerb: kerb)
                     }
                     else{
                         loginPressed.toggle()

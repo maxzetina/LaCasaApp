@@ -42,7 +42,11 @@ struct SavesView: View {
                         ForEach(modelData.saves) { save in
                             SavesRow(save: save).swipeActions{
                                 Button(role: .destructive) {
-                                     print("Deleting conversation")
+                                    Task {
+                                        await modelData.deleteSave(saveId: save.id)
+                                        
+                                        modelData.getSaves(date: savesDate)
+                                    }
                                  } label: {
                                      Label("Delete", systemImage: "trash.fill")
                                  }.disabled(save.kerb != modelData.user.kerb)
@@ -92,14 +96,6 @@ struct SavesView: View {
             modelData.getSaves(date: savesDate)
         }
     }
-}
-
-func deleteSave(at offsets: IndexSet) {
-    for index in offsets{
-        print(index)
-    }
-
-//    let _ = print(offsets)
 }
 
 struct SavesView_Previews: PreviewProvider {

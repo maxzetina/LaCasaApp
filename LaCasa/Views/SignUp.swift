@@ -287,7 +287,7 @@ struct SignUp: View {
                     }
                 }
             }.navigationTitle("Create Account")
-        }.onAppear{
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear{
             modelData.getResidents()
         }
     }

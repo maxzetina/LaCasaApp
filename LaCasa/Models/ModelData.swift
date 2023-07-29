@@ -105,7 +105,26 @@ class ModelData: ObservableObject {
         do {
             // (data, response)
             let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
-//            self.saves.append(Save(id: 19, name: saveRequest.name, request: saveRequest.request))
+        } catch {
+            print("Request failed.")
+        }
+    }
+    
+    func deleteSave(saveId: Int) async {
+        guard let encoded = try? JSONEncoder().encode(["id": saveId]) else {
+            print("Failed to encode request")
+            return
+        }
+        
+        let endpoint = "/api/deleteSave"
+        
+        let url = URL(string: baseURL + endpoint)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        do {
+            // (data, response)
+            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
         } catch {
             print("Request failed.")
         }
