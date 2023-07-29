@@ -22,7 +22,7 @@ struct SavesView: View {
                             Text("On:").fontWeight(.semibold)
                             Spacer()
                             
-                            Text("\(savesDate.formatted(.dateTime.day().month().weekday()))").font(.title3).foregroundColor(.red)
+                            Text("\(savesDate.formatted(.dateTime.day().month().weekday()))").font(.title3).foregroundColor(.red).fontWeight(Calendar.current.isDate(savesDate, inSameDayAs: Date()) ? .bold : .none)
                             
                             Spacer()
                             
@@ -31,7 +31,7 @@ struct SavesView: View {
                                     "",
                                     selection: $savesDate,
                                     displayedComponents: [.date]
-                                ).padding().labelsHidden().blendMode(.destinationOver).onChange(of: savesDate){ newDate in
+                                ).padding().tint(.red).labelsHidden().blendMode(.destinationOver).onChange(of: savesDate){ newDate in
                                     modelData.getSaves(date: newDate)
                                 }
                             )
@@ -85,7 +85,7 @@ struct SavesView: View {
                             Button(action: {
                                 showRequestSaveSheet.toggle()
                             }, label: { Image(systemName: "plus") }).sheet(isPresented: $showRequestSaveSheet){
-                                RequestSave(showRequestSaveSheet: $showRequestSaveSheet)
+                                RequestSave(showRequestSaveSheet: $showRequestSaveSheet, savesDate: savesDate)
                             }
                         }
                 }.refreshable {

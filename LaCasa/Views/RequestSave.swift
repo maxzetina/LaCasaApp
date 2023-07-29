@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RequestSave: View {
     @Binding var showRequestSaveSheet: Bool
+    var savesDate: Date
     
     @EnvironmentObject var modelData: ModelData
     @State var multiselect: Bool = false
@@ -78,7 +79,7 @@ struct RequestSave: View {
                             await modelData.requestSave(kerb: modelData.user.kerb, date: date, request: comment)
                         }
                         submitPressed.toggle()
-                        modelData.getSaves(date: Date())
+                        modelData.getSaves(date: savesDate)
                         showRequestSaveSheet.toggle()
                     }
                 }, label: {
@@ -108,6 +109,6 @@ struct RequestSave: View {
 
 struct RequestSave_Previews: PreviewProvider {
     static var previews: some View {
-        RequestSave(showRequestSaveSheet: .constant(true)).environmentObject(ModelData())
+        RequestSave(showRequestSaveSheet: .constant(true), savesDate: Date()).environmentObject(ModelData())
     }
 }

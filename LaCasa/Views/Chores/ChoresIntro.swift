@@ -16,7 +16,7 @@ struct ChoresIntro: View {
             HStack{
                 Spacer()
                 ZStack{
-                    Capsule().frame(width: 150, height: 50)
+                    Capsule().frame(width: 150, height: 50).foregroundColor(.black)
                     
                     Text("Team " + String(team)).foregroundColor(.white).font(.title).fontWeight(.bold)
                 }
