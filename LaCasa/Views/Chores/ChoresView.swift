@@ -16,7 +16,7 @@ struct ChoresView: View {
     var body: some View {
         VStack{
             if modelData.loadingChores {
-                LoadingSpinner(text: "Loading chores...", scale: 2)
+                LoadingSpinner(text: "Loading chores...", scale: 2, tint: .blue)
             }
             else{
                 NavigationView{
