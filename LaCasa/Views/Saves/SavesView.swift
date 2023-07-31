@@ -108,7 +108,7 @@ struct SavesView: View {
         .onAppear{
             Task {
                 await modelData.getSaves(date: savesDate)
-                loadingSaves.toggle()
+                loadingSaves = false
             }
         }
     }

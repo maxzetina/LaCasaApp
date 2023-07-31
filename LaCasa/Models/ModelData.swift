@@ -18,21 +18,6 @@ class ModelData: ObservableObject {
         
     let baseURL: String = "https://la-casa-app-server.vercel.app"
     
-    func getChores() async -> [Chore] {
-        return await GET(endpoint: "/api/chores", type: [Chore].self, defaultValue: [])
-    }
-        
-    func getSaves(date: Date) async {
-        let stringDate = dateToString(date: date)
-        let endpoint = "/api/saves?day=\(stringDate)"
-        self.saves = await GET(endpoint: endpoint, type: [Save].self, defaultValue: [])
-    }
-    
-    func getUserSaves() async -> [Save] {
-        let endpoint = "/api/userSaves?kerb=\(self.user.kerb)"
-        return await GET(endpoint: endpoint, type: [Save].self, defaultValue: [])
-    }
-    
     func GET<T: Decodable>(endpoint: String, type: T.Type, defaultValue: T) async -> T {
         
         guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
@@ -49,6 +34,21 @@ class ModelData: ObservableObject {
         catch {
             return defaultValue
         }
+    }
+    
+    func getChores() async -> [Chore] {
+        return await GET(endpoint: "/api/chores", type: [Chore].self, defaultValue: [])
+    }
+        
+    func getSaves(date: Date) async {
+        let stringDate = dateToString(date: date)
+        let endpoint = "/api/saves?day=\(stringDate)"
+        self.saves = await GET(endpoint: endpoint, type: [Save].self, defaultValue: [])
+    }
+    
+    func getUserSaves() async -> [Save] {
+        let endpoint = "/api/userSaves?kerb=\(self.user.kerb)"
+        return await GET(endpoint: endpoint, type: [Save].self, defaultValue: [])
     }
     
     //to fix

@@ -15,7 +15,7 @@ struct ChoresView: View {
     @State var loadingChores = true
     var dueDate: String = next(self: Date(), weekday: Weekday.sunday, considerToday: true)
     
-    @State var listAnimationTrigger = false
+    @State var listAnimation = false
     
     var body: some View {
         VStack{
@@ -37,9 +37,9 @@ struct ChoresView: View {
                                         ChoreRow(chore: chore)
                                     }
                             }
-                        }.opacity(listAnimationTrigger ? 1.0 : 0.0).onAppear(){
+                        }.opacity(listAnimation ? 1.0 : 0.0).onAppear(){
                             withAnimation(.linear(duration: 2)){
-                                listAnimationTrigger.toggle()
+                                listAnimation = true
                             }
                         }
                     }.navigationTitle("Chores")
@@ -50,7 +50,7 @@ struct ChoresView: View {
             Task{
                 chores = await modelData.getChores()
                 team = chores[0].team
-                loadingChores.toggle()
+                loadingChores = false
             }
         }
     }
