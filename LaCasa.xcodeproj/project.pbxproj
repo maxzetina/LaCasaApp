@@ -173,9 +173,9 @@
 			children = (
 				1B89D62B2A436017008C5976 /* Chore.swift */,
 				1B89D62D2A43626E008C5976 /* ModelData.swift */,
-				1B89D6482A689D3B008C5976 /* User.swift */,
 				1B89D63A2A45E909008C5976 /* Save.swift */,
 				1B89D62F2A43DF70008C5976 /* SaveRequest.swift */,
+				1B89D6482A689D3B008C5976 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -184,11 +184,11 @@
 			isa = PBXGroup;
 			children = (
 				1B89D64E2A6A1995008C5976 /* Chores */,
-				1B89D6022A4282D9008C5976 /* ContentView.swift */,
+				1B89D65E2A775079008C5976 /* Saves */,
 				1B89D64A2A68E20C008C5976 /* Home.swift */,
+				1B89D6022A4282D9008C5976 /* ContentView.swift */,
 				1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */,
 				1B89D6562A6DD1C4008C5976 /* RequestSave.swift */,
-				1B89D65E2A775079008C5976 /* Saves */,
 				1B89D6462A688BAD008C5976 /* Login.swift */,
 				1B89D6582A721923008C5976 /* InputTextField.swift */,
 				1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */,
