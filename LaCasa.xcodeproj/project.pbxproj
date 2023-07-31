@@ -187,10 +187,8 @@
 				1B89D6022A4282D9008C5976 /* ContentView.swift */,
 				1B89D64A2A68E20C008C5976 /* Home.swift */,
 				1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */,
-				1B89D6382A452ADB008C5976 /* SavesView.swift */,
 				1B89D6562A6DD1C4008C5976 /* RequestSave.swift */,
-				1B89D65C2A770788008C5976 /* SavesEdit.swift */,
-				1B89D6542A6CBEEF008C5976 /* SavesRow.swift */,
+				1B89D65E2A775079008C5976 /* Saves */,
 				1B89D6462A688BAD008C5976 /* Login.swift */,
 				1B89D6582A721923008C5976 /* InputTextField.swift */,
 				1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */,
@@ -208,6 +206,16 @@
 				1B89D6362A452ABA008C5976 /* ChoresView.swift */,
 			);
 			path = Chores;
+			sourceTree = "<group>";
+		};
+		1B89D65E2A775079008C5976 /* Saves */ = {
+			isa = PBXGroup;
+			children = (
+				1B89D65C2A770788008C5976 /* SavesEdit.swift */,
+				1B89D6542A6CBEEF008C5976 /* SavesRow.swift */,
+				1B89D6382A452ADB008C5976 /* SavesView.swift */,
+			);
+			path = Saves;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
