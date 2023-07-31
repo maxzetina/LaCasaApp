@@ -15,64 +15,22 @@ class ModelData: ObservableObject {
     @Published var residents: [User] = []
     @Published var mealPlanUsers: [User] = []
     @Published var loadedMealPlanUsers = false
-    
-    enum Endpoints: String, CaseIterable, Identifiable {
-        case chores = "/api/chores"
-        case choresTeam = "/api/choresTeam"
-        var id: Self { self }
-    }
-    
+        
     let baseURL: String = "https://la-casa-app-server.vercel.app"
     
-    func getSaves(date: Date) {
-        let stringDate = dateToString(date: date)
-
-        let endpoint = "/api/saves?day=\(stringDate)"
+    func getChores() async -> [Chore] {
+        return await GET(endpoint: "/api/chores", type: [Chore].self, defaultValue: [])
+    }
         
-        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
-
-        let urlRequest = URLRequest(url: url)
-
-        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = error {
-                print("Request error: ", error)
-                return
-            }
-
-            guard let response = response as? HTTPURLResponse else { return }
-
-            if response.statusCode == 200 {
-                guard let data = data else { return }
-                DispatchQueue.main.async {
-                    do {
-                        let decodedSaves = try JSONDecoder().decode([Save].self, from: data)
-                        self.saves = decodedSaves
-                    } catch let error {
-                        print("Error decoding: ", error)
-                    }
-                }
-            }
-        }
-        dataTask.resume()
+    func getSaves(date: Date) async {
+        let stringDate = dateToString(date: date)
+        let endpoint = "/api/saves?day=\(stringDate)"
+        self.saves = await GET(endpoint: endpoint, type: [Save].self, defaultValue: [])
     }
     
     func getUserSaves() async -> [Save] {
         let endpoint = "/api/userSaves?kerb=\(self.user.kerb)"
-
-        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
-
-        let urlRequest = URLRequest(url: url)
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(for: urlRequest)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200
-            else { return [] }
-            let decodedUserSaves = try JSONDecoder().decode([Save].self, from: data)
-            return decodedUserSaves
-        }
-        catch {
-            return []
-        }
+        return await GET(endpoint: endpoint, type: [Save].self, defaultValue: [])
     }
     
     func GET<T: Decodable>(endpoint: String, type: T.Type, defaultValue: T) async -> T {

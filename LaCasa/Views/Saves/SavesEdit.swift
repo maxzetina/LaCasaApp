@@ -73,7 +73,7 @@ struct SavesEdit: View {
                                 }
 
                                 submitPressed.toggle()
-                                modelData.getSaves(date: savesDate)
+                                await modelData.getSaves(date: savesDate)
                                 showEditSavesSheet.toggle()
                             }
                         }, label: {

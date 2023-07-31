@@ -10,34 +10,47 @@ import CryptoKit
 
 struct SavesView: View {
     @EnvironmentObject var modelData: ModelData
+    @State var loadingSaves: Bool = true
+    @State var saves: [Save] = []
     @State private var savesDate = Date()
     @State var dinnerPushedAlert: Bool = false
     @State var showEditSavesSheet: Bool = false
     
     var body: some View {
         NavigationView{
-                List{
-                    Section{
-                        HStack{
-                            Text("On:").fontWeight(.semibold)
-                            Spacer()
-                            
-                            Text("\(savesDate.formatted(.dateTime.day().month().weekday()))").font(.title3).foregroundColor(.red).fontWeight(Calendar.current.isDate(savesDate, inSameDayAs: Date()) ? .bold : .none)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "calendar").overlay(
-                                DatePicker(
-                                    "",
-                                    selection: $savesDate,
-                                    displayedComponents: [.date]
-                                ).padding().tint(.red).labelsHidden().blendMode(.destinationOver).onChange(of: savesDate){ newDate in
-                                    modelData.getSaves(date: newDate)
+            List{
+                Section{
+                    HStack{
+                        Text("On:").fontWeight(.semibold)
+                        Spacer()
+                        
+                        Text("\(savesDate.formatted(.dateTime.day().month().weekday()))").font(.title3).foregroundColor(.red).fontWeight(Calendar.current.isDate(savesDate, inSameDayAs: Date()) ? .bold : .none)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "calendar").overlay(
+                            DatePicker(
+                                "",
+                                selection: $savesDate,
+                                displayedComponents: [.date]
+                            ).padding().tint(.red).labelsHidden().blendMode(.destinationOver).onChange(of: savesDate){ newDate in
+                                Task {
+                                    await modelData.getSaves(date: newDate)
                                 }
-                            )
-                        }
+                            }
+                        )
                     }
-                    
+                }
+                
+                
+                if(loadingSaves) {
+                    HStack{
+                        Spacer()
+                        LoadingSpinner(scale: 1.5, tint: .blue)
+                        Spacer()
+                    }.listRowBackground(Color.clear)
+                }
+                else{
                     if(!modelData.saves.isEmpty){
                         ForEach(modelData.saves) { save in
                             SavesRow(save: save).swipeActions{
@@ -45,7 +58,7 @@ struct SavesView: View {
                                     Task {
                                         await modelData.deleteSave(saveId: save.id)
                                         
-                                        modelData.getSaves(date: savesDate)
+                                        await modelData.getSaves(date: savesDate)
                                     }
                                  } label: {
                                      Label("Delete", systemImage: "trash.fill")
@@ -60,40 +73,43 @@ struct SavesView: View {
                             Spacer()
                         }.listRowBackground(Color.clear)
                     }
-                
-                }.navigationTitle("Saves")
-                .toolbar{
-                    ToolbarItemGroup() {
-                            Button(action:
-                            {
-                                dinnerPushedAlert.toggle()
-                                
-                            }, label: { Image(systemName: "clock") })
-                            .alert(isPresented: $dinnerPushedAlert){
-                                Alert(title: Text("Push Dinner?"),
-                                      message: Text("This will send a message in slack and an email"),
-                                      primaryButton: .destructive(Text("Cancel")),
-                                      secondaryButton: .default(Text("Yes"))
-                                      {
-                                          Task {
-                                              await modelData.pushDinner()
-                                           }
-                                       }
-                                )
-                            }
-                            
-                            Button(action: {
-                                showEditSavesSheet.toggle()
-                            }, label: { Image(systemName: "square.and.pencil") }).sheet(isPresented: $showEditSavesSheet){
-                                SavesEdit(showEditSavesSheet: $showEditSavesSheet, savesDate: savesDate)
-                            }
-                        }
-                }.refreshable {
-                    savesDate = Date()
-                    modelData.getSaves(date: savesDate)
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear{
-            modelData.getSaves(date: savesDate)
+            }.navigationTitle("Saves").refreshable {
+                savesDate = Date()
+                await modelData.getSaves(date: savesDate)
+            }.toolbar{
+                ToolbarItemGroup() {
+                        Button(action:
+                        {
+                            dinnerPushedAlert.toggle()
+                            
+                        }, label: { Image(systemName: "clock") })
+                        .alert(isPresented: $dinnerPushedAlert){
+                            Alert(title: Text("Push Dinner?"),
+                                  message: Text("This will send a message in slack and an email"),
+                                  primaryButton: .destructive(Text("Cancel")),
+                                  secondaryButton: .default(Text("Yes"))
+                                  {
+                                      Task {
+                                          await modelData.pushDinner()
+                                       }
+                                   }
+                            )
+                        }
+                        
+                        Button(action: {
+                            showEditSavesSheet.toggle()
+                        }, label: { Image(systemName: "square.and.pencil") }).sheet(isPresented: $showEditSavesSheet){
+                            SavesEdit(showEditSavesSheet: $showEditSavesSheet, savesDate: savesDate)
+                        }
+                    }
+                }
+        }.navigationViewStyle(StackNavigationViewStyle())
+        .onAppear{
+            Task {
+                await modelData.getSaves(date: savesDate)
+                loadingSaves.toggle()
+            }
         }
     }
 }

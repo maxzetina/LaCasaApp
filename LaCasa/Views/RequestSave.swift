@@ -78,7 +78,7 @@ struct RequestSave: View {
 //                            await modelData.requestSave(kerb: modelData.user.kerb, date: date, request: comment)
 //                        }
                         submitPressed.toggle()
-                        modelData.getSaves(date: savesDate)
+                        await modelData.getSaves(date: savesDate)
                         showRequestSaveSheet.toggle()
                     }
                 }, label: {

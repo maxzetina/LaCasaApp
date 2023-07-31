@@ -11,7 +11,7 @@ struct ChoresView: View {
     @EnvironmentObject var modelData: ModelData
     
     @State var chores: [Chore] = []
-    @State var team: ChoresTeam = ChoresTeam(team: 0)
+    @State var team: Int = 0
     @State var loadingChores = true
     var dueDate: String = next(self: Date(), weekday: Weekday.sunday, considerToday: true)
     
@@ -26,7 +26,7 @@ struct ChoresView: View {
                 NavigationView{
                     List{
                         Section{
-                            ChoresIntro(team: team.team, dueDate: dueDate)
+                            ChoresIntro(team: team, dueDate: dueDate)
                         }
                     
                         Section{
@@ -48,8 +48,8 @@ struct ChoresView: View {
             
         }.onAppear{
             Task{
-                chores = await modelData.GET(endpoint: ModelData.Endpoints.chores.rawValue, type: [Chore].self, defaultValue: [])
-                team = await modelData.GET(endpoint: ModelData.Endpoints.choresTeam.rawValue, type: [ChoresTeam].self, defaultValue: [])[0]
+                chores = await modelData.getChores()
+                team = chores[0].team
                 loadingChores.toggle()
             }
         }
