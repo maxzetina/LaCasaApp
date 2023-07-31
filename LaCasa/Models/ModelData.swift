@@ -10,48 +10,19 @@ import Combine
 import CryptoKit
 
 class ModelData: ObservableObject {
-    @Published var chores: [Chore] = []
-    @Published var currentTeam: Int = 0
-    @Published var loadingChores: Bool = true
     @Published var saves: [Save] = []
     @Published var user: User = User.default
     @Published var residents: [User] = []
     @Published var mealPlanUsers: [User] = []
     @Published var loadedMealPlanUsers = false
     
-    let baseURL: String = "https://la-casa-app-server.vercel.app"
-
-    func getChores() {
-        let endpoint = "/api/chores"
-        
-        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
-
-        let urlRequest = URLRequest(url: url)
-
-        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = error {
-                print("Request error: ", error)
-                return
-            }
-
-            guard let response = response as? HTTPURLResponse else { return }
-
-            if response.statusCode == 200 {
-                guard let data = data else { return }
-                DispatchQueue.main.async {
-                    do {
-                        let decodedChores = try JSONDecoder().decode([Chore].self, from: data)
-                        self.chores = decodedChores
-                        self.currentTeam = decodedChores[0].team
-                        self.loadingChores = false
-                    } catch let error {
-                        print("Error decoding: ", error)
-                    }
-                }
-            }
-        }
-        dataTask.resume()
+    enum Endpoints: String, CaseIterable, Identifiable {
+        case chores = "/api/chores"
+        case choresTeam = "/api/choresTeam"
+        var id: Self { self }
     }
+    
+    let baseURL: String = "https://la-casa-app-server.vercel.app"
     
     func getSaves(date: Date) {
         let stringDate = dateToString(date: date)
@@ -101,6 +72,24 @@ class ModelData: ObservableObject {
         }
         catch {
             return []
+        }
+    }
+    
+    func GET<T: Decodable>(endpoint: String, type: T.Type, defaultValue: T) async -> T {
+        
+        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
+
+        let urlRequest = URLRequest(url: url)
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: urlRequest)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200
+            else { return defaultValue }
+            let decodedData = try JSONDecoder().decode(T.self, from: data)
+            return decodedData
+        }
+        catch {
+            return defaultValue
         }
     }
     

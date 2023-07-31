@@ -73,7 +73,7 @@ struct Login: View {
                     
                     VStack{
                         if(loginPressed){
-                            ProgressView().scaleEffect(1.5).progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            LoadingSpinner(scale: 1.5, tint: .white)
                         }
                         else{
                             Text("LOGIN").foregroundColor(.white).fontWeight(.bold).font(.title3)

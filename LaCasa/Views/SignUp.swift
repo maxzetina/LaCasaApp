@@ -232,7 +232,7 @@ struct SignUp: View {
                             
                             VStack{
                                 if(signUpPressed){
-                                    ProgressView().scaleEffect(1.5).progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                    LoadingSpinner(scale: 1.5, tint: .white)
                                 }
                                 else{
                                     Text("Sign Up").foregroundColor(.white).fontWeight(.bold).font(.title3)
