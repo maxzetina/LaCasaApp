@@ -32,6 +32,7 @@
 		1B89D6552A6CBEEF008C5976 /* SavesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6542A6CBEEF008C5976 /* SavesRow.swift */; };
 		1B89D6572A6DD1C4008C5976 /* RequestSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6562A6DD1C4008C5976 /* RequestSave.swift */; };
 		1B89D6592A721923008C5976 /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6582A721923008C5976 /* InputTextField.swift */; };
+		1B89D65D2A770788008C5976 /* SavesEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D65C2A770788008C5976 /* SavesEdit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		1B89D6542A6CBEEF008C5976 /* SavesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavesRow.swift; sourceTree = "<group>"; };
 		1B89D6562A6DD1C4008C5976 /* RequestSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSave.swift; sourceTree = "<group>"; };
 		1B89D6582A721923008C5976 /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
+		1B89D65C2A770788008C5976 /* SavesEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavesEdit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 				1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */,
 				1B89D6382A452ADB008C5976 /* SavesView.swift */,
 				1B89D6562A6DD1C4008C5976 /* RequestSave.swift */,
+				1B89D65C2A770788008C5976 /* SavesEdit.swift */,
 				1B89D6542A6CBEEF008C5976 /* SavesRow.swift */,
 				1B89D6462A688BAD008C5976 /* Login.swift */,
 				1B89D6582A721923008C5976 /* InputTextField.swift */,
@@ -339,6 +342,7 @@
 			files = (
 				1B89D6572A6DD1C4008C5976 /* RequestSave.swift in Sources */,
 				1B89D62C2A436017008C5976 /* Chore.swift in Sources */,
+				1B89D65D2A770788008C5976 /* SavesEdit.swift in Sources */,
 				1B89D62E2A43626E008C5976 /* ModelData.swift in Sources */,
 				1B89D6522A6A1A61008C5976 /* PasswordTextField.swift in Sources */,
 				1B89D6472A688BAD008C5976 /* Login.swift in Sources */,

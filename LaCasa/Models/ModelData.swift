@@ -19,6 +19,8 @@ class ModelData: ObservableObject {
     @Published var mealPlanUsers: [User] = []
     @Published var loadedMealPlanUsers = false
 
+    @Published var userSaves: [Save] = []
+    
     let baseURL: String = "https://la-casa-app-server.vercel.app"
 
     func getChores() {
@@ -85,11 +87,60 @@ class ModelData: ObservableObject {
         dataTask.resume()
     }
     
-    //to fix
-    func requestSave(kerb: String, date: Date, request: String) async {
-        let stringDate = dateToString(date: date)
+    func getUserSaves() async {
+        let endpoint = "/api/userSaves?kerb=\(self.user.kerb)"
 
-        let saveRequest: SaveRequest = SaveRequest(kerb: kerb, day: stringDate, request: request)
+        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
+
+        let urlRequest = URLRequest(url: url)
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: urlRequest)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200
+            else { return }
+            let decodedUserSaves = try JSONDecoder().decode([Save].self, from: data)
+            self.userSaves = decodedUserSaves
+        }
+        catch {
+            return
+        }
+        
+        
+        
+//        let endpoint = "/api/userSaves?kerb=\(user.kerb)"
+//
+//        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
+//
+//        let urlRequest = URLRequest(url: url)
+//
+//        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+//            if let error = error {
+//                print("Request error: ", error)
+//                return
+//            }
+//
+//            guard let response = response as? HTTPURLResponse else { return }
+//
+//            if response.statusCode == 200 {
+//                guard let data = data else { return }
+//                DispatchQueue.main.async {
+//                    do {
+//                        let decodedUserSaves = try JSONDecoder().decode([Save].self, from: data)
+//                        self.userSaves = decodedUserSaves
+//                    } catch let error {
+//                        print("Error decoding: ", error)
+//                    }
+//                }
+//            }
+//        }
+//        dataTask.resume()
+    }
+    
+    //to fix
+    func requestSave(date: String, request: String) async {
+//        let stringDate = dateToString(date: date)
+
+        let saveRequest: SaveRequest = SaveRequest(kerb: self.user.kerb, day: date, request: request)
         
         guard let encoded = try? JSONEncoder().encode(saveRequest) else {
             print("Failed to encode request")

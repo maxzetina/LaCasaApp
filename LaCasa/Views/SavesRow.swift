@@ -37,6 +37,6 @@ struct SavesRow: View {
 
 struct SavesRow_Previews: PreviewProvider {
     static var previews: some View {
-        SavesRow(save: Save(id: 100, fname: "Maxwell", lname: "Zetina-Jimenez", kerb: "zetina", request: "Extra chicken please", dietary_restriction: "Gluten Free"))
+        SavesRow(save: Save(id: 100, fname: "Maxwell", lname: "Zetina-Jimenez", kerb: "zetina", day: "2023-01-01", request: "Extra chicken please", dietary_restriction: "Gluten Free"))
     }
 }

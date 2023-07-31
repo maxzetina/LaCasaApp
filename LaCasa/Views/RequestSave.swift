@@ -13,7 +13,6 @@ struct RequestSave: View {
     
     @EnvironmentObject var modelData: ModelData
     @State var multiselect: Bool = false
-    
     @State private var singleDate = Date()
     @State var multipleDates: Set<DateComponents> = [Calendar.current.dateComponents([.calendar, .era, .day, .month, .year], from: Date() as Date)]
     
@@ -26,7 +25,7 @@ struct RequestSave: View {
             Form{
                 Section{
                     Toggle(isOn: $multiselect) {
-                        Text("Multiselect").font(.headline)
+                        Text("Select Multiple Dates").font(.headline)
                     }.tint(.blue).padding()
                     
                     if(multiselect){
@@ -66,18 +65,18 @@ struct RequestSave: View {
                     Task{
                         submitPressed.toggle()
                         
-                        var selectedDates: [Date] = [singleDate]
-                        
-                        if(multiselect){
-                            selectedDates = multipleDates
-                                .compactMap { date in
-                                    Calendar.current.date(from: date)
-                                }
-                        }
+//                        var selectedDates: [Date] = [singleDate]
+//                        
+//                        if(multiselect){
+//                            selectedDates = multipleDates
+//                                .compactMap { date in
+//                                    Calendar.current.date(from: date)
+//                                }
+//                        }
            
-                        for date in selectedDates {
-                            await modelData.requestSave(kerb: modelData.user.kerb, date: date, request: comment)
-                        }
+//                        for date in selectedDates {
+//                            await modelData.requestSave(kerb: modelData.user.kerb, date: date, request: comment)
+//                        }
                         submitPressed.toggle()
                         modelData.getSaves(date: savesDate)
                         showRequestSaveSheet.toggle()

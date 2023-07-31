@@ -12,7 +12,7 @@ struct SavesView: View {
     @EnvironmentObject var modelData: ModelData
     @State private var savesDate = Date()
     @State var dinnerPushedAlert: Bool = false
-    @State var showRequestSaveSheet: Bool = false
+    @State var showEditSavesSheet: Bool = false
     
     var body: some View {
         NavigationView{
@@ -83,9 +83,9 @@ struct SavesView: View {
                             }
                             
                             Button(action: {
-                                showRequestSaveSheet.toggle()
-                            }, label: { Image(systemName: "plus") }).sheet(isPresented: $showRequestSaveSheet){
-                                RequestSave(showRequestSaveSheet: $showRequestSaveSheet, savesDate: savesDate)
+                                showEditSavesSheet.toggle()
+                            }, label: { Image(systemName: "square.and.pencil") }).sheet(isPresented: $showEditSavesSheet){
+                                SavesEdit(showEditSavesSheet: $showEditSavesSheet, savesDate: savesDate)
                             }
                         }
                 }.refreshable {
