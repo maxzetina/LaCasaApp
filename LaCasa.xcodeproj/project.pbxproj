@@ -33,6 +33,7 @@
 		1B89D6572A6DD1C4008C5976 /* RequestSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6562A6DD1C4008C5976 /* RequestSave.swift */; };
 		1B89D6592A721923008C5976 /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6582A721923008C5976 /* InputTextField.swift */; };
 		1B89D65D2A770788008C5976 /* SavesEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D65C2A770788008C5976 /* SavesEdit.swift */; };
+		1B89D6622A785A9E008C5976 /* POSTResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6612A785A9E008C5976 /* POSTResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		1B89D6562A6DD1C4008C5976 /* RequestSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSave.swift; sourceTree = "<group>"; };
 		1B89D6582A721923008C5976 /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
 		1B89D65C2A770788008C5976 /* SavesEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavesEdit.swift; sourceTree = "<group>"; };
+		1B89D6612A785A9E008C5976 /* POSTResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POSTResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 			children = (
 				1B89D62B2A436017008C5976 /* Chore.swift */,
 				1B89D62D2A43626E008C5976 /* ModelData.swift */,
+				1B89D6612A785A9E008C5976 /* POSTResult.swift */,
 				1B89D63A2A45E909008C5976 /* Save.swift */,
 				1B89D62F2A43DF70008C5976 /* SaveRequest.swift */,
 				1B89D6482A689D3B008C5976 /* User.swift */,
@@ -348,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B89D6622A785A9E008C5976 /* POSTResult.swift in Sources */,
 				1B89D6572A6DD1C4008C5976 /* RequestSave.swift in Sources */,
 				1B89D62C2A436017008C5976 /* Chore.swift in Sources */,
 				1B89D65D2A770788008C5976 /* SavesEdit.swift in Sources */,

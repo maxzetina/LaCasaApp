@@ -34,7 +34,9 @@ struct ContentView: View {
                             Label("Saves", systemImage: "fork.knife")
                         }
                 }.onAppear{
-                    modelData.getUser(kerb: kerb)
+                    Task{
+                        await modelData.getUser(kerb: kerb)
+                    }
                 }
             }
         }
