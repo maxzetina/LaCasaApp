@@ -13,8 +13,8 @@ class ModelData: ObservableObject {
     @Published var saves: [Save] = []
     @Published var user: User = User.default
     @Published var residents: [User] = []
-    @Published var mealPlanUsers: [User] = []
-    @Published var loadedMealPlanUsers = false
+//    @Published var mealPlanUsers: [User] = []
+//    @Published var loadedMealPlanUsers = false
         
     let baseURL: String = "https://la-casa-app-server.vercel.app"
     
@@ -38,7 +38,7 @@ class ModelData: ObservableObject {
     
     func POST<T: Codable>(endpoint: String, obj: T) async -> POSTResult {
         guard let encoded = try? JSONEncoder().encode(obj) else {
-            return POSTResult(successful: false, errorMsg: "Failed to encode request")
+            return POSTResult(successful: false, errorMsg: "Failed to encode request", result: false)
         }
 
         let url = URL(string: baseURL + endpoint)!
@@ -50,7 +50,7 @@ class ModelData: ObservableObject {
             let decodedResponse = try JSONDecoder().decode(POSTResult.self, from: data)
             return decodedResponse
         } catch {
-            return POSTResult(successful: false, errorMsg: "Request failed.")
+            return POSTResult(successful: false, errorMsg: "Request failed.", result: false)
         }
     }
     
@@ -82,68 +82,17 @@ class ModelData: ObservableObject {
         return await GET(endpoint: endpoint, type: [Save].self, defaultValue: [])
     }
     
-    //to fix
-    func requestSave(date: String, request: String) async {
-//        let stringDate = dateToString(date: date)
-
+    func requestSave(date: String, request: String) async -> POSTResult {
         let saveRequest: SaveRequest = SaveRequest(kerb: self.user.kerb, day: date, request: request)
-        
-        guard let encoded = try? JSONEncoder().encode(saveRequest) else {
-            print("Failed to encode request")
-            return
-        }
-        
-        let endpoint = "/api/requestSave"
-        
-        let url = URL(string: baseURL + endpoint)!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        do {
-            // (data, response)
-            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
-        } catch {
-            print("Request failed.")
-        }
+        return await POST(endpoint: "/api/requestSave", obj: saveRequest)
     }
     
-    func deleteSave(saveId: Int) async {
-        guard let encoded = try? JSONEncoder().encode(["id": saveId]) else {
-            print("Failed to encode request")
-            return
-        }
-        
-        let endpoint = "/api/deleteSave"
-        
-        let url = URL(string: baseURL + endpoint)!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        do {
-            // (data, response)
-            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
-        } catch {
-            print("Request failed.")
-        }
+    func deleteSave(saveId: Int) async -> POSTResult {
+        return await POST(endpoint: "/api/deleteSave", obj: ["id": saveId])
     }
     
-    func pushDinner() async {
-        guard let encoded = try? JSONEncoder().encode(["test": "hi"]) else {
-            print("Failed to encode request")
-            return
-        }
-        let endpoint = "/api/sendDinnerPushed"
-        
-        let url = URL(string: baseURL + endpoint)!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        do {
-            // (data, response)
-            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
-        } catch {
-            print("Request failed.")
-        }
+    func pushDinner() async -> POSTResult {
+        return await POST(endpoint: "/api/sendDinnerPushed", obj: ["test": "hi"])
     }
     
     func handleLogin(kerb: String, password: String) async -> Bool {
@@ -244,66 +193,13 @@ class ModelData: ObservableObject {
         return false
     }
     
-    func getResidents() {
-        let endpoint = "/api/residents"
-        
-        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
-
-        let urlRequest = URLRequest(url: url)
-
-        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = error {
-                print("Request error: ", error)
-                return
-            }
-
-            guard let response = response as? HTTPURLResponse else { return }
-
-            if response.statusCode == 200 {
-                guard let data = data else { return }
-                DispatchQueue.main.async {
-                    do {
-                        let decodedResidents = try JSONDecoder().decode([User].self, from: data)
-                        self.residents = decodedResidents
-                    } catch let error {
-                        print("Error decoding: ", error)
-                    }
-                }
-            }
-        }
-        dataTask.resume()
+    func getResidents() async {
+        self.residents = await GET(endpoint: "/api/residents", type: [User].self, defaultValue: [])
     }
     
-    func getMealPlanUsers() {
-        let endpoint = "/api/mealPlanUsers"
-        
-        guard let url = URL(string: baseURL + endpoint) else { fatalError("Missing URL") }
-
-        let urlRequest = URLRequest(url: url)
-
-        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = error {
-                print("Request error: ", error)
-                return
-            }
-
-            guard let response = response as? HTTPURLResponse else { return }
-
-            if response.statusCode == 200 {
-                guard let data = data else { return }
-                DispatchQueue.main.async {
-                    do {
-                        let decodedUsers = try JSONDecoder().decode([User].self, from: data)
-                        self.mealPlanUsers = decodedUsers
-                        self.loadedMealPlanUsers = true
-                    } catch let error {
-                        print("Error decoding: ", error)
-                    }
-                }
-            }
-        }
-        dataTask.resume()
-    }
+//    func getMealPlanUsers() async -> [User] {
+//        return await GET(endpoint: "/api/mealPlanUsers", type: [User].self, defaultValue: [])
+//    }
     
     func resetUser() {
         self.user = User.default

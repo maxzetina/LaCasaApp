@@ -64,7 +64,7 @@ struct SavesEdit: View {
                                 for date in selectedDates.symmetricDifference(initialDates) {
                                     // new date = new save
                                     if(!initialDates.contains(date)){
-                                        await modelData.requestSave(date: date, request: comment)
+                                        let res = await modelData.requestSave(date: date, request: comment)
                                     }
                                     else {
                                         let save = dateToSave[date]

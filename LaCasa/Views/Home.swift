@@ -24,6 +24,10 @@ struct Home: View {
                 kerb = ""
                 modelData.resetUser()
             }
+        }.onAppear{
+            Task{
+                await modelData.getUser(kerb: kerb)
+            }
         }
     }
 }

@@ -56,7 +56,7 @@ struct SavesView: View {
                             SavesRow(save: save).swipeActions{
                                 Button(role: .destructive) {
                                     Task {
-                                        await modelData.deleteSave(saveId: save.id)
+                                        let res = await modelData.deleteSave(saveId: save.id)
                                         
                                         await modelData.getSaves(date: savesDate)
                                     }
