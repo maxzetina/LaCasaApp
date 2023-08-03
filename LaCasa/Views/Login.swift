@@ -59,7 +59,9 @@ struct Login: View {
                 Task{
                     loginPressed.toggle()
                     
-                    isLoggedIn = await modelData.handleLogin(kerb: kerb, password: password)
+                    let res = await modelData.handleLogin(kerb: kerb, password: password)
+                    
+                    isLoggedIn = res.result
                     
                     if(isLoggedIn){
                         user = kerb

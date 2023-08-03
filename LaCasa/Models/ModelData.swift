@@ -95,33 +95,12 @@ class ModelData: ObservableObject {
         return await POST(endpoint: "/api/sendDinnerPushed", obj: ["test": "hi"])
     }
     
-    func handleLogin(kerb: String, password: String) async -> Bool {
+    func handleLogin(kerb: String, password: String) async -> POSTResult {
         let encryptedInput = encryptString(text: password)
-        
-        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": encryptedInput]) else {
-            print("Failed to encode request")
-            return false
-        }
-        
-        let endpoint = "/api/login"
-        
-        let url = URL(string: baseURL + endpoint)!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        do {
-            // (data, response)
-            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
-            let decodedResponse = try JSONDecoder().decode(Bool.self, from: data)
-
-            return decodedResponse
-        } catch {
-            print("Request failed.")
-        }
-        return false
+        return await POST(endpoint: "/api/login", obj: ["kerb": kerb, "password": encryptedInput])
     }
 
-    func signupNonresident(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String) async {
+    func signupNonresident(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String) async -> POSTResult {
         
         let encryptedPassword = encryptString(text: password)
         let isResident = 0 //false
@@ -129,68 +108,16 @@ class ModelData: ObservableObject {
 
         let newUser = User(fname: fname, lname: lname, kerb: kerb, year: year, major: major, dietary_restriction: dietary_restriction, password: encryptedPassword, resident: isResident, onMealPlan: isOnMealPlan)
         
-        guard let encoded = try? JSONEncoder().encode(newUser) else {
-            print("Failed to encode request")
-            return
-        }
-        let endpoint = "/api/signupNonresident"
-        
-        let url = URL(string: baseURL + endpoint)!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        do {
-            // (data, response)
-            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
-        } catch {
-            print("Request failed.")
-        }
+        return await POST(endpoint: "/api/signupNonresident", obj: newUser)
     }
     
-    func signupResident(kerb: String, password: String) async {
-        
+    func signupResident(kerb: String, password: String) async -> POSTResult {
         let encryptedPassword = encryptString(text: password)
-                
-        guard let encoded = try? JSONEncoder().encode(["kerb": kerb, "password": encryptedPassword]) else {
-            print("Failed to encode request")
-            return
-        }
-        let endpoint = "/api/signupResident"
-        
-        let url = URL(string: baseURL + endpoint)!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        do {
-            // (data, response)
-            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
-        } catch {
-            print("Request failed.")
-        }
+        return await POST(endpoint: "/api/signupResident", obj: ["kerb": kerb, "password": encryptedPassword])
     }
     
-    func doesAccountExist(kerb: String) async -> Bool {
-        guard let encoded = try? JSONEncoder().encode(["kerb": kerb]) else {
-            print("Failed to encode request")
-            return false
-        }
-        
-        let endpoint = "/api/accountExists"
-        
-        let url = URL(string: baseURL + endpoint)!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        do {
-            // (data, response)
-            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
-            let decodedResponse = try JSONDecoder().decode(Bool.self, from: data)
-
-            return decodedResponse
-        } catch {
-            print("Request failed.")
-        }
-        return false
+    func doesAccountExist(kerb: String) async -> POSTResult {
+        return await POST(endpoint: "/api/accountExists", obj: ["kerb": kerb])
     }
     
     func getResidents() async {

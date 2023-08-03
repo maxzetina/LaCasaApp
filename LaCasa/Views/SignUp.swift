@@ -181,7 +181,9 @@ struct SignUp: View {
                             if(selectedRole == Role.resident){
                                 let residentKerb = modelData.residents[residentIndex].kerb
                                 
-                                accountExists = await modelData.doesAccountExist(kerb: residentKerb)
+                                let res = await modelData.doesAccountExist(kerb: residentKerb)
+                                
+                                accountExists = res.result
                                 
                                 if(!validPw || accountExists){
                                     showAlert.toggle()
@@ -190,7 +192,7 @@ struct SignUp: View {
                                 else{
                                     signUpPressed.toggle()
                                     
-                                    await modelData.signupResident(kerb: residentKerb, password: password)
+                                    _ = await modelData.signupResident(kerb: residentKerb, password: password)
                                     
                                     showSignupSheet.toggle()
                                     signUpPressed.toggle()
@@ -204,7 +206,9 @@ struct SignUp: View {
                                 validLname = checkName(text: lname)
                                 validYear = checkYear(text: year)
                                 
-                                accountExists = await modelData.doesAccountExist(kerb: kerb)
+                                let res = await modelData.doesAccountExist(kerb: kerb)
+                                
+                                accountExists = res.result
                                 
                                 validNonresident = true
                                 for resident in modelData.residents {
@@ -219,7 +223,7 @@ struct SignUp: View {
                                 else{
                                     signUpPressed.toggle()
                                     
-                                    await modelData.signupNonresident(fname: fname, lname: lname, kerb: kerb, year: Int(year) ?? 0, major: major, password: password)
+                                    _ = await modelData.signupNonresident(fname: fname, lname: lname, kerb: kerb, year: Int(year) ?? 0, major: major, password: password)
                                     
                                     
                                     showSignupSheet.toggle()

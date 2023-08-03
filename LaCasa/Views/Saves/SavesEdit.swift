@@ -64,11 +64,11 @@ struct SavesEdit: View {
                                 for date in selectedDates.symmetricDifference(initialDates) {
                                     // new date = new save
                                     if(!initialDates.contains(date)){
-                                        let res = await modelData.requestSave(date: date, request: comment)
+                                        _ = await modelData.requestSave(date: date, request: comment)
                                     }
                                     else {
                                         let save = dateToSave[date]
-                                        await modelData.deleteSave(saveId: save!.id)
+                                        _ = await modelData.deleteSave(saveId: save!.id)
                                     }
                                 }
 
