@@ -33,8 +33,6 @@ struct ContentView: View {
                         .tabItem {
                             Label("Saves", systemImage: "fork.knife")
                         }
-                }.onAppear{
-                    modelData.getUser(kerb: kerb)
                 }
             }
         }

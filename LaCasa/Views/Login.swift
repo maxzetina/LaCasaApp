@@ -63,11 +63,12 @@ struct Login: View {
                 Task{
                     loginPressed.toggle()
                     
-                    isLoggedIn = await modelData.handleLogin(kerb: kerb, password: password)
+                    let res = await modelData.handleLogin(kerb: kerb, password: password)
+                    
+                    isLoggedIn = res.result
                     
                     if(isLoggedIn){
                         user = kerb
-                        modelData.getUser(kerb: kerb)
                     }
                     else{
                         loginPressed.toggle()
@@ -78,7 +79,7 @@ struct Login: View {
                     
                     VStack{
                         if(loginPressed){
-                            ProgressView().scaleEffect(1.5).progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            LoadingSpinner(scale: 1.5, tint: .white)
                         }
                         else{
                             Text("LOGIN").foregroundColor(.white).fontWeight(.bold).font(.title3)

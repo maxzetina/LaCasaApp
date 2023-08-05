@@ -12,6 +12,7 @@ struct Save: Hashable, Codable, Identifiable {
     var fname: String
     var lname: String
     var kerb: String
+    var day: String
     var request: String
     var dietary_restriction: String
 }

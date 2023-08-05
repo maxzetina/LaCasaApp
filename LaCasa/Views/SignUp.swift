@@ -49,6 +49,7 @@ struct SignUp: View {
     @FocusState var isConfirmPwInputActive: Bool
     
     @State var accountExists: Bool = false
+    @State var validNonresident: Bool = true
 
     
     let bulletPoint: String = "\u{2022}"
@@ -88,7 +89,11 @@ struct SignUp: View {
                         InputTextField(placeholderText: "Last name", input: $lname, autocapitalize: true).focused($isLnameInputActive)
                         
                         HStack{
-                            InputTextField(placeholderText: "Year", width: 125, input: $year, img: Image(systemName: "graduationcap.fill")).keyboardType(.numberPad).focused($isYearInputActive)
+                            InputTextField(placeholderText: "Year", width: 125, input: $year, img: Image(systemName: "graduationcap.fill")).keyboardType(.numberPad).focused($isYearInputActive).onChange(of: year){ newYear in
+                                if newYear.count > 4 {
+                                    year = String(newYear.prefix(4))
+                                }
+                            }
 
                             Spacer()
 
@@ -176,7 +181,9 @@ struct SignUp: View {
                             if(selectedRole == Role.resident){
                                 let residentKerb = modelData.residents[residentIndex].kerb
                                 
-                                accountExists = await modelData.doesAccountExist(kerb: residentKerb)
+                                let res = await modelData.doesAccountExist(kerb: residentKerb)
+                                
+                                accountExists = res.result
                                 
                                 if(!validPw || accountExists){
                                     showAlert.toggle()
@@ -185,7 +192,7 @@ struct SignUp: View {
                                 else{
                                     signUpPressed.toggle()
                                     
-                                    await modelData.signupResident(kerb: residentKerb, password: password)
+                                    _ = await modelData.signupResident(kerb: residentKerb, password: password)
                                     
                                     showSignupSheet.toggle()
                                     signUpPressed.toggle()
@@ -199,15 +206,24 @@ struct SignUp: View {
                                 validLname = checkName(text: lname)
                                 validYear = checkYear(text: year)
                                 
-                                accountExists = await modelData.doesAccountExist(kerb: kerb)
+                                let res = await modelData.doesAccountExist(kerb: kerb)
                                 
-                                if(!(validKerb && validFname && validLname && validYear && validPw) || accountExists){
+                                accountExists = res.result
+                                
+                                validNonresident = true
+                                for resident in modelData.residents {
+                                    if resident.kerb == kerb {
+                                        validNonresident = false
+                                    }
+                                }
+                                                                
+                                if(!(validKerb && validFname && validLname && validYear && validPw) || accountExists || !validNonresident){
                                     showAlert.toggle()
                                 }
                                 else{
                                     signUpPressed.toggle()
                                     
-                                    await modelData.signupNonresident(fname: fname, lname: lname, kerb: kerb, year: Int(year) ?? 0, major: major, password: password)
+                                    _ = await modelData.signupNonresident(fname: fname, lname: lname, kerb: kerb, year: Int(year) ?? 0, major: major, password: password)
                                     
                                     
                                     showSignupSheet.toggle()
@@ -220,7 +236,7 @@ struct SignUp: View {
                             
                             VStack{
                                 if(signUpPressed){
-                                    ProgressView().scaleEffect(1.5).progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                    LoadingSpinner(scale: 1.5, tint: .white)
                                 }
                                 else{
                                     Text("Sign Up").foregroundColor(.white).fontWeight(.bold).font(.title3)
@@ -230,13 +246,17 @@ struct SignUp: View {
                     }).alert(isPresented: $showAlert){
                         var title = ""
                         var msg = ""
-                        if(accountExists){
-                            title = "Account Already Exists"
-                            msg = "Please reset your password if this is a mistake"
-                        }
-                        else if(!validKerb && selectedRole == Role.nonresident) {
+                        if(!validKerb && selectedRole == Role.nonresident){
                             title = "Invalid Kerb"
                             msg = "Kerb must be 3-8 lowercase, alphanumeric characters (including underscores) and cannot start with a digit."
+                        }
+                        else if(!validNonresident && selectedRole == Role.nonresident){
+                            title = "Account is a Resident"
+                            msg = "Please create a Resident Account"
+                        }
+                        else if(accountExists) {
+                            title = "Account Already Exists"
+                            msg = "Please reset your password if this is a mistake"
                         }
                         else if(!validFname && selectedRole == Role.nonresident){
                             title = "Invalid First Name"
@@ -271,8 +291,10 @@ struct SignUp: View {
                     }
                 }
             }.navigationTitle("Create Account")
-        }.onAppear{
-            modelData.getResidents()
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear{
+            Task {
+                await modelData.getResidents()
+            }
         }
     }
 }

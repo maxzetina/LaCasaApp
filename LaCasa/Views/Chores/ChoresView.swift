@@ -9,34 +9,37 @@ import SwiftUI
 
 struct ChoresView: View {
     @EnvironmentObject var modelData: ModelData
+    
+    @State var chores: [Chore] = []
+    @State var team: Int = 0
+    @State var loadingChores = true
     var dueDate: String = next(self: Date(), weekday: Weekday.sunday, considerToday: true)
     
-    @State var listAnimationTrigger = false
+    @State var listAnimation = false
     
     var body: some View {
         VStack{
-            if modelData.loadingChores {
-                LoadingSpinner(text: "Loading chores...", scale: 2)
+            if(loadingChores) {
+                LoadingSpinner(text: "Loading chores...", scale: 2, tint: .blue)
             }
             else{
                 NavigationView{
                     List{
                         Section{
-                            ChoresIntro(team: modelData.currentTeam, dueDate: dueDate)
-                    
+                            ChoresIntro(team: team, dueDate: dueDate)
                         }
                     
                         Section{
-                            ForEach(modelData.chores) { chore in
+                            ForEach(chores) { chore in
                                     NavigationLink {
                                         ChoresDetail(chore: chore)
                                     } label: {
                                         ChoreRow(chore: chore)
                                     }
                             }
-                        }.opacity(self.listAnimationTrigger ? 1.0 : 0.0).onAppear(){
+                        }.opacity(listAnimation ? 1.0 : 0.0).onAppear(){
                             withAnimation(.linear(duration: 2)){
-                                self.listAnimationTrigger = true
+                                listAnimation = true
                             }
                         }
                     }.navigationTitle("Chores")
@@ -44,7 +47,11 @@ struct ChoresView: View {
             }
             
         }.onAppear{
-            modelData.getChores()
+            Task{
+                chores = await modelData.getChores()
+                team = chores[0].team
+                loadingChores = false
+            }
         }
     }
 }
