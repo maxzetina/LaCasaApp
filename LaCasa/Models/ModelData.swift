@@ -153,6 +153,11 @@ class ModelData: ObservableObject {
         }
         return false
     }
+    
+    func requestPassword(kerb: String) async -> Bool {
+//        Change this and add api
+        return true
+    }
 
     func signupNonresident(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String) async {
         
