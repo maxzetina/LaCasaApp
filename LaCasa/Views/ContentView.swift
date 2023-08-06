@@ -19,11 +19,6 @@ struct ContentView: View {
             }
             else{
                 TabView() {
-                    Home(isLoggedIn: $isLoggedIn, kerb: $kerb)
-                        .tabItem{
-                            Label("Home", systemImage: "house")
-                    }
-                    
                     ChoresView()
                         .tabItem {
                             Label("Chores", systemImage: "list.bullet")
@@ -33,7 +28,16 @@ struct ContentView: View {
                         .tabItem {
                             Label("Saves", systemImage: "fork.knife")
                         }
+                    
+                    AccountView(isLoggedIn: $isLoggedIn, kerb: $kerb)
+                        .tabItem{
+                            Label("Profile", systemImage: "house")
+                    }
                 }
+            }
+        }.onAppear{
+            Task{
+                await modelData.getUser(kerb: kerb)
             }
         }
     }

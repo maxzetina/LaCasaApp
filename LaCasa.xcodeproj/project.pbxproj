@@ -26,7 +26,7 @@
 		1B89D6432A4D18EB008C5976 /* ChoresDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6422A4D18EB008C5976 /* ChoresDetail.swift */; };
 		1B89D6472A688BAD008C5976 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6462A688BAD008C5976 /* Login.swift */; };
 		1B89D6492A689D3B008C5976 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6482A689D3B008C5976 /* User.swift */; };
-		1B89D64B2A68E20C008C5976 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D64A2A68E20C008C5976 /* Home.swift */; };
+		1B89D64B2A68E20C008C5976 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D64A2A68E20C008C5976 /* AccountView.swift */; };
 		1B89D64D2A69C471008C5976 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D64C2A69C471008C5976 /* SignUp.swift */; };
 		1B89D6522A6A1A61008C5976 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */; };
 		1B89D6552A6CBEEF008C5976 /* SavesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6542A6CBEEF008C5976 /* SavesRow.swift */; };
@@ -77,7 +77,7 @@
 		1B89D6422A4D18EB008C5976 /* ChoresDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoresDetail.swift; sourceTree = "<group>"; };
 		1B89D6462A688BAD008C5976 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		1B89D6482A689D3B008C5976 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		1B89D64A2A68E20C008C5976 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		1B89D64A2A68E20C008C5976 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		1B89D64C2A69C471008C5976 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		1B89D6542A6CBEEF008C5976 /* SavesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavesRow.swift; sourceTree = "<group>"; };
@@ -188,7 +188,7 @@
 			children = (
 				1B89D64E2A6A1995008C5976 /* Chores */,
 				1B89D65E2A775079008C5976 /* Saves */,
-				1B89D64A2A68E20C008C5976 /* Home.swift */,
+				1B89D64A2A68E20C008C5976 /* AccountView.swift */,
 				1B89D6022A4282D9008C5976 /* ContentView.swift */,
 				1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */,
 				1B89D6562A6DD1C4008C5976 /* RequestSave.swift */,
@@ -362,7 +362,7 @@
 				1B89D6302A43DF70008C5976 /* SaveRequest.swift in Sources */,
 				1B89D6432A4D18EB008C5976 /* ChoresDetail.swift in Sources */,
 				1B89D6492A689D3B008C5976 /* User.swift in Sources */,
-				1B89D64B2A68E20C008C5976 /* Home.swift in Sources */,
+				1B89D64B2A68E20C008C5976 /* AccountView.swift in Sources */,
 				1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */,
 				1B89D63B2A45E909008C5976 /* Save.swift in Sources */,
 				1B89D6412A47FC06008C5976 /* ChoreRow.swift in Sources */,

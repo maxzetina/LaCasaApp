@@ -27,18 +27,32 @@ struct SavesView: View {
                         Text("\(savesDate.formatted(.dateTime.day().month().weekday()))").font(.title3).foregroundColor(.red).fontWeight(Calendar.current.isDate(savesDate, inSameDayAs: Date()) ? .bold : .none)
                         
                         Spacer()
-                        
-                        Image(systemName: "calendar").overlay(
-                            DatePicker(
-                                "",
-                                selection: $savesDate,
-                                displayedComponents: [.date]
-                            ).padding().tint(.red).labelsHidden().blendMode(.destinationOver).onChange(of: savesDate){ newDate in
-                                Task {
-                                    await modelData.getSaves(date: newDate)
+                        ZStack{
+                            Circle().fill(.black).frame(width: 40)
+
+                            Image(systemName: "calendar").overlay(
+                                DatePicker(
+                                    "",
+                                    selection: $savesDate,
+                                    displayedComponents: [.date]
+                                ).padding().tint(.red).labelsHidden().blendMode(.destinationOver).onChange(of: savesDate){ newDate in
+                                    Task {
+                                        await modelData.getSaves(date: newDate)
+                                    }
                                 }
-                            }
-                        )
+                            ).foregroundColor(.white)
+                        }
+//                        Image(systemName: "calendar").overlay(
+//                            DatePicker(
+//                                "",
+//                                selection: $savesDate,
+//                                displayedComponents: [.date]
+//                            ).padding().tint(.red).labelsHidden().blendMode(.destinationOver).onChange(of: savesDate){ newDate in
+//                                Task {
+//                                    await modelData.getSaves(date: newDate)
+//                                }
+//                            }
+//                        )
                     }
                 }
                 
