@@ -11,7 +11,8 @@ struct AccountView: View {
     @EnvironmentObject var modelData: ModelData
 
     @State var residentInfo: ResidentInfo = ResidentInfo.default
-    
+    @State var logoutAlert: Bool = false
+
     var body: some View {
         NavigationView{
             VStack{
@@ -134,6 +135,25 @@ struct AccountView: View {
                         SettingsView()
                     } label: {
                         Image(systemName: "gearshape")
+                    }
+                }
+                ToolbarItemGroup(){
+                    Button(action:
+                    {
+                        logoutAlert.toggle()
+                        
+                    }, label: { Image(systemName: "rectangle.portrait.and.arrow.right") })
+                    .alert(isPresented: $logoutAlert){
+                        Alert(title: Text("Logout?"),
+                              message: Text(""),
+                              primaryButton: .destructive(Text("Cancel")),
+                              secondaryButton: .default(Text("Logout"))
+                               {
+                                    modelData.isLoggedIn = false
+                                    modelData.kerb = ""
+                                    modelData.resetUser()
+                               }
+                        )
                     }
                 }
             }

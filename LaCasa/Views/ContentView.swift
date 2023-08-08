@@ -29,7 +29,7 @@ struct ContentView: View {
                     
                     AccountView()
                         .tabItem{
-                            Label("Profile", systemImage: "house")
+                            Label("Profile", systemImage: "person")
                         }
                 }.onAppear{
                     Task{
