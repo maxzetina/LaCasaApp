@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01E409642A6F59370010AF0E /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E409632A6F59370010AF0E /* ForgotPassword.swift */; };
+		1B3181482A816FFF00D7D047 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3181472A816FFF00D7D047 /* SettingsView.swift */; };
 		1B89D6012A4282D9008C5976 /* LaCasaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6002A4282D9008C5976 /* LaCasaApp.swift */; };
 		1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6022A4282D9008C5976 /* ContentView.swift */; };
 		1B89D6052A4282DA008C5976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B89D6042A4282DA008C5976 /* Assets.xcassets */; };
@@ -30,7 +32,6 @@
 		1B89D64D2A69C471008C5976 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D64C2A69C471008C5976 /* SignUp.swift */; };
 		1B89D6522A6A1A61008C5976 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */; };
 		1B89D6552A6CBEEF008C5976 /* SavesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6542A6CBEEF008C5976 /* SavesRow.swift */; };
-		1B89D6572A6DD1C4008C5976 /* RequestSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6562A6DD1C4008C5976 /* RequestSave.swift */; };
 		1B89D6592A721923008C5976 /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6582A721923008C5976 /* InputTextField.swift */; };
 		1B89D65D2A770788008C5976 /* SavesEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D65C2A770788008C5976 /* SavesEdit.swift */; };
 		1B89D6622A785A9E008C5976 /* POSTResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6612A785A9E008C5976 /* POSTResult.swift */; };
@@ -54,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01E409632A6F59370010AF0E /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
+		1B3181472A816FFF00D7D047 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1B89D5FD2A4282D9008C5976 /* LaCasa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaCasa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B89D6002A4282D9008C5976 /* LaCasaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaCasaApp.swift; sourceTree = "<group>"; };
 		1B89D6022A4282D9008C5976 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,7 +84,6 @@
 		1B89D64C2A69C471008C5976 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		1B89D6542A6CBEEF008C5976 /* SavesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavesRow.swift; sourceTree = "<group>"; };
-		1B89D6562A6DD1C4008C5976 /* RequestSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSave.swift; sourceTree = "<group>"; };
 		1B89D6582A721923008C5976 /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
 		1B89D65C2A770788008C5976 /* SavesEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavesEdit.swift; sourceTree = "<group>"; };
 		1B89D6612A785A9E008C5976 /* POSTResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POSTResult.swift; sourceTree = "<group>"; };
@@ -189,13 +191,14 @@
 				1B89D64E2A6A1995008C5976 /* Chores */,
 				1B89D65E2A775079008C5976 /* Saves */,
 				1B89D64A2A68E20C008C5976 /* AccountView.swift */,
+				1B3181472A816FFF00D7D047 /* SettingsView.swift */,
 				1B89D6022A4282D9008C5976 /* ContentView.swift */,
 				1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */,
-				1B89D6562A6DD1C4008C5976 /* RequestSave.swift */,
 				1B89D6462A688BAD008C5976 /* Login.swift */,
 				1B89D6582A721923008C5976 /* InputTextField.swift */,
 				1B89D6512A6A1A61008C5976 /* PasswordTextField.swift */,
 				1B89D64C2A69C471008C5976 /* SignUp.swift */,
+				01E409632A6F59370010AF0E /* ForgotPassword.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -352,7 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B89D6622A785A9E008C5976 /* POSTResult.swift in Sources */,
-				1B89D6572A6DD1C4008C5976 /* RequestSave.swift in Sources */,
+				1B3181482A816FFF00D7D047 /* SettingsView.swift in Sources */,
 				1B89D62C2A436017008C5976 /* Chore.swift in Sources */,
 				1B89D65D2A770788008C5976 /* SavesEdit.swift in Sources */,
 				1B89D62E2A43626E008C5976 /* ModelData.swift in Sources */,
@@ -364,6 +367,7 @@
 				1B89D6492A689D3B008C5976 /* User.swift in Sources */,
 				1B89D64B2A68E20C008C5976 /* AccountView.swift in Sources */,
 				1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */,
+				01E409642A6F59370010AF0E /* ForgotPassword.swift in Sources */,
 				1B89D63B2A45E909008C5976 /* Save.swift in Sources */,
 				1B89D6412A47FC06008C5976 /* ChoreRow.swift in Sources */,
 				1B89D6392A452ADB008C5976 /* SavesView.swift in Sources */,

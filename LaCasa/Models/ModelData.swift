@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CryptoKit
+import SwiftUI
 
 class ModelData: ObservableObject {
     @Published var saves: [Save] = []
@@ -15,8 +16,11 @@ class ModelData: ObservableObject {
     @Published var residents: [User] = []
 //    @Published var mealPlanUsers: [User] = []
 //    @Published var loadedMealPlanUsers = false
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+    @AppStorage("kerb") var kerb: String = ""
+
         
-    let baseURL: String = "https://la-casa-app-server.vercel.app"
+    private let baseURL: String = "https://la-casa-app-server.vercel.app"
     
     func GET<T: Codable>(endpoint: String, type: T.Type, defaultValue: T) async -> T {
         
@@ -60,11 +64,19 @@ class ModelData: ObservableObject {
         let user = await GET(endpoint: endpoint, type: [User].self, defaultValue: [User.default])
         
         if(user.isEmpty){
-            self.user.kerb = kerb
+            self.user = User.default
         }
         else{
             self.user = user[0]
         }
+    }
+    
+    func getResidentInfo() async -> ResidentInfo {
+        let residentInfo = await GET(endpoint: "/api/residentInfo?kerb=zetina", type: [ResidentInfo].self, defaultValue: [])
+        if(residentInfo.isEmpty){
+            return ResidentInfo.default
+        }
+        return residentInfo[0]
     }
     
     func getChores() async -> [Chore] {
@@ -98,6 +110,11 @@ class ModelData: ObservableObject {
     func handleLogin(kerb: String, password: String) async -> POSTResult {
         let encryptedInput = encryptString(text: password)
         return await POST(endpoint: "/api/login", obj: ["kerb": kerb, "password": encryptedInput])
+    }
+    
+    func requestPassword(kerb: String) async -> Bool {
+//        Change this and add api
+        return true
     }
 
     func signupNonresident(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String) async -> POSTResult {

@@ -19,10 +19,24 @@ struct User: Hashable, Codable, Identifiable, Equatable {
     var resident: Int
     var onMealPlan: Int
     
-    static let `default` = User(id: 0, fname: "", lname: "", kerb: "", year: 0, major: "", dietary_restriction: "", password: "", resident: 0, onMealPlan: 0)
-    
-    static func == (userA: User, userB: User) -> Bool {
-        return userA.kerb == userB.kerb
-    }
-
+    static let `default` = User(id: 0, fname: "DEFAULT", lname: "DEFAULT", kerb: "DEFAULT", year: 0, major: "DEFAULT", dietary_restriction: "DEFAULT", password: "", resident: 0, onMealPlan: 0)
 }
+
+struct ResidentInfo: Hashable, Codable {
+    var office: String
+    var room: Int
+    var total_housing_points: Double
+    var status1: String
+    var status2: String
+    var status3: String
+    var status4: String
+    
+    static let `default` = ResidentInfo(office: "", room: 0, total_housing_points: 0, status1: "", status2: "", status3: "", status4: "")
+}
+
+//struct Attendance: Hashable, Codable {
+//    var status1: String
+//    var status2: String
+//    var status3: String
+//    var status4: String
+//}

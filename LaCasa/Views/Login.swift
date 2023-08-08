@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct Login: View {
-    @Binding var isLoggedIn: Bool
-    @Binding var user: String
-
     @EnvironmentObject var modelData: ModelData
 
     @State private var kerb = ""
@@ -19,6 +16,7 @@ struct Login: View {
     @State var passwordVisible: Bool = false
     
     @State var showSignupSheet: Bool = false
+    @State var showForgotPasswordSheet: Bool = false
     
     @FocusState var isKerbInputActive: Bool
     @FocusState var isPwInputActive: Bool
@@ -50,8 +48,11 @@ struct Login: View {
         
            
             Button("Forgot Password?"){
+                showForgotPasswordSheet.toggle()
+            }.foregroundColor(Color("ForgotPwColor")).sheet(isPresented: $showForgotPasswordSheet){
                 
-            }.foregroundColor(Color("ForgotPwColor"))
+                ForgotPassword(showForgotPasswordSheet: $showForgotPasswordSheet)
+            }
             
             
             Spacer().frame(height: 60)
@@ -61,10 +62,10 @@ struct Login: View {
                     
                     let res = await modelData.handleLogin(kerb: kerb, password: password)
                     
-                    isLoggedIn = res.result
+                    modelData.isLoggedIn = res.result
                     
-                    if(isLoggedIn){
-                        user = kerb
+                    if(modelData.isLoggedIn){
+                        modelData.kerb = kerb
                     }
                     else{
                         loginPressed.toggle()
@@ -100,7 +101,7 @@ struct Login: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login(isLoggedIn: .constant(true), user: .constant("")).environmentObject(ModelData())
+        Login().environmentObject(ModelData())
     }
 }
 
