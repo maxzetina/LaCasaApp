@@ -49,10 +49,10 @@ struct AccountView: View {
                     
                     Divider().padding()
                     
-                    if(modelData.user.resident == 1){
+                    if(modelData.user.isResident()){
                         HStack{
                             Text("Position:").fontWeight(.bold)
-                            Text(residentInfo.office == "" ? "Resident" : residentInfo.office)
+                            Text(residentInfo.isExec() ? residentInfo.office : "Resident")
                             Spacer()
                             Text("Room:").fontWeight(.bold)
                             Text(String(residentInfo.room))
@@ -81,7 +81,7 @@ struct AccountView: View {
                         }.padding([.bottom, .leading])
                     }
                     
-                    if(modelData.user.resident == 1){
+                    if(modelData.user.isResident()){
                         VStack{
                             HStack{
                                 Text("GBM Attendance").fontWeight(.bold)
@@ -89,41 +89,25 @@ struct AccountView: View {
                             }.padding()
                             
                             HStack{
-                                ForEach([residentInfo.status1, residentInfo.status2, residentInfo.status3, residentInfo.status4], id: \.self){ status in
-                                    if(status == "present"){
-                                        Image(systemName: "checkmark.circle.fill").resizable().foregroundColor(.green).frame(width: 65)
-                                    }
-                                    else if(status == "late"){
-                                        Image(systemName: "exclamationmark.circle.fill").resizable().scaledToFit().foregroundColor(.yellow).frame(width: 65)
-                                    }
-                                    else if(status == "absent"){
-                                        Image(systemName: "x.circle.fill").resizable().foregroundColor(Color("LoginButtonColor")).frame(width: 65)
-                                    }
-                                    else{
-                                        Circle().fill(.gray).opacity(0.4).frame(width: 65)
-                                    }
+                                ForEach(residentInfo.gbm_attendance, id: \.self){ status in
+                                    AttendanceCircle(status: status)
                                 }
                                 Spacer()
                             }.padding(.leading)
                         }
                     }
-                    //if on exec
-                    if(residentInfo.office != ""){
+
+                    if(residentInfo.isExec()){
                         VStack{
                             HStack{
                                 Text("EBM Attendance").fontWeight(.bold)
                                 Spacer()
                             }.padding()
                             
-                            
                             HStack{
-                                Image(systemName: "checkmark.circle.fill").resizable().foregroundColor(.green).frame(width: 65)
-                                //                Image(systemName: "x.circle.fill").resizable().foregroundColor(Color("LoginButtonColor")).frame(width: 65)
-                                //                Image(systemName: "exclamationmark.circle.fill").resizable().scaledToFit().foregroundColor(.yellow).frame(width: 65)
-                                Circle().fill(.gray).opacity(0.4).frame(width: 65)
-                                Circle().fill(.gray).opacity(0.4).frame(width: 65)
-                                Circle().fill(.gray).opacity(0.4).frame(width: 65)
-                                
+                                ForEach(residentInfo.ebm_attendance, id: \.self){ status in
+                                    AttendanceCircle(status: status)
+                                }
                                 Spacer()
                             }.padding(.leading)
                         }.padding(.bottom)
@@ -159,8 +143,7 @@ struct AccountView: View {
             }
         }.navigationViewStyle(StackNavigationViewStyle()).onAppear{
             Task{
-                //if resident
-                if(modelData.user.resident == 1){
+                if(modelData.user.isResident()){
                     residentInfo = await modelData.getResidentInfo()
                 }
             }

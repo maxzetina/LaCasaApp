@@ -72,11 +72,27 @@ class ModelData: ObservableObject {
     }
     
     func getResidentInfo() async -> ResidentInfo {
-        let residentInfo = await GET(endpoint: "/api/residentInfo?kerb=zetina", type: [ResidentInfo].self, defaultValue: [])
-        if(residentInfo.isEmpty){
+        let dataArr = await GET(endpoint: "/api/residentInfo?kerb=\(self.user.kerb)", type: [ResidentInfoRequest].self, defaultValue: [])
+        if(dataArr.isEmpty){
             return ResidentInfo.default
         }
-        return residentInfo[0]
+        let data = dataArr[0]
+        var residentInfo = ResidentInfo(office: data.office, room: data.room, total_housing_points: data.total_housing_points, gbm_attendance: [], ebm_attendance: [])
+        
+        for status in [data.status1, data.status2, data.status3, data.status4] {
+            residentInfo.gbm_attendance.append(AttendanceStatus(rawValue: status) ?? AttendanceStatus.none)
+        }
+        
+        if (residentInfo.isExec()) {
+            let ebmDataArr = await GET(endpoint: "/api/userEbm?kerb=\(self.user.kerb)", type: [EbmAttendanceRequest].self, defaultValue: [])
+            if(ebmDataArr.isEmpty){ return residentInfo }
+            let ebmData = ebmDataArr[0]
+            for status in [ebmData.status1, ebmData.status2, ebmData.status3, ebmData.status4] {
+                residentInfo.ebm_attendance.append(AttendanceStatus(rawValue: status) ?? AttendanceStatus.none)
+            }
+        }
+        
+        return residentInfo
     }
     
     func getChores() async -> [Chore] {
