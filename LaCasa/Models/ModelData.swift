@@ -133,6 +133,11 @@ class ModelData: ObservableObject {
         return true
     }
 
+    func changePassword(newPassword: String) async -> POSTResult {
+        let encryptedInput = encryptString(text: newPassword)
+        return await POST(endpoint: "/api/changePassword", obj: ["kerb": self.user.kerb, "password": encryptedInput])
+    }
+    
     func signupNonresident(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String) async -> POSTResult {
         
         let encryptedPassword = encryptString(text: password)

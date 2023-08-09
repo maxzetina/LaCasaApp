@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct PasswordTextField: View {
+    var placeholder: String
     @Binding var password: String
+    
     @State var passwordVisible: Bool = false
     
     var body: some View {
@@ -17,12 +19,12 @@ struct PasswordTextField: View {
                 Image(systemName: "lock.fill").padding(.leading)
                 
                 if(passwordVisible){
-                    TextField("password", text: $password)   .disableAutocorrection(true)
+                    TextField("", text: $password)   .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .padding(.leading, 4.0)
                 }
                 else{
-                    SecureField("password", text: $password)   .disableAutocorrection(true)
+                    SecureField(placeholder, text: $password)   .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .padding(.leading, 4.0)
                 }
@@ -40,6 +42,6 @@ struct PasswordTextField: View {
 
 struct PasswordTextField_Previews: PreviewProvider {
     static var previews: some View {
-        PasswordTextField(password: .constant("password"), passwordVisible: false)
+        PasswordTextField(placeholder: "password", password: .constant("password"), passwordVisible: false)
     }
 }

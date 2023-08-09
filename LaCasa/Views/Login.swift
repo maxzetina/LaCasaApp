@@ -43,7 +43,7 @@ struct Login: View {
             .focused($isKerbInputActive)
 
             
-            PasswordTextField(password: $password)
+            PasswordTextField(placeholder: "password", password: $password)
             .focused($isPwInputActive)
         
            

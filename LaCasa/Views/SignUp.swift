@@ -112,7 +112,7 @@ struct SignUp: View {
                         Text(bulletPoint + "  Include at least one symbol").foregroundColor(includesSymbol ? .green : .red)
                     }
                     
-                    PasswordTextField(password: $password).onChange(of: password){ newValue in
+                    PasswordTextField(placeholder: "password", password: $password).onChange(of: password){ newValue in
                         
                         pwMeetsLen = newValue.count >= minPasswordLen
                         includesUppercase = containsUppercase(text: newValue)
