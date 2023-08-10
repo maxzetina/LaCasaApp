@@ -158,6 +158,10 @@ class ModelData: ObservableObject {
         return await POST(endpoint: "/api/accountExists", obj: ["kerb": kerb])
     }
     
+    func deleteAccount() async -> POSTResult {
+        return await POST(endpoint: "/api/deleteAccount", obj: ["kerb": self.user.kerb])
+    }
+    
     func getResidents() async {
         self.residents = await GET(endpoint: "/api/residents", type: [User].self, defaultValue: [])
     }

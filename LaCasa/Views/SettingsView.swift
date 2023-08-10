@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var modelData: ModelData
 
+    @State var deletingAccount: Bool = false
     @State var deleteAccountAlert: Bool = false
     
     var body: some View {
@@ -40,14 +41,30 @@ struct SettingsView: View {
                               message: Text("This will remove you from La Casa's system and cannot be undone"),
                               primaryButton: .cancel(Text("Cancel")),
                               secondaryButton: .destructive(Text("Delete"))
-                               {
+                              {
+                                Task{
+                                    deletingAccount = true
+                                    
+                                    _ = await modelData.deleteAccount()
+                                    
+                                    deletingAccount = false
                                     modelData.isLoggedIn = false
                                     modelData.kerb = ""
                                     modelData.resetUser()
-//                                    await modelData.deleteAccount()
-                               }
+                                    
+                                }
+                            }
                         )
                     }
+                }
+                
+                if(deletingAccount){
+                    HStack{
+                        Spacer()
+                        LoadingSpinner(scale: 2.0, tint: .blue)
+                        Spacer()
+                        
+                    }.listRowBackground(Color.clear)
                 }
             }
         }.navigationTitle("Settings")
