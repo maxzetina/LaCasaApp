@@ -120,7 +120,7 @@ class ModelData: ObservableObject {
     }
     
     func pushDinner() async -> POSTResult {
-        return await POST(endpoint: "/api/sendDinnerPushed", obj: ["test": "hi"])
+        return await POST(endpoint: "/api/sendDinnerPushed", obj: ["kerb": self.user.kerb])
     }
     
     func handleLogin(kerb: String, password: String) async -> POSTResult {
@@ -136,6 +136,16 @@ class ModelData: ObservableObject {
     func changePassword(newPassword: String) async -> POSTResult {
         let encryptedInput = encryptString(text: newPassword)
         return await POST(endpoint: "/api/changePassword", obj: ["kerb": self.user.kerb, "password": encryptedInput])
+    }
+    
+    func updateProfile(fname: String, lname: String, year: Int, major: String, dietary_restriction: String) async -> POSTResult {
+        let updatedUser = User(fname: fname, lname: lname, kerb: self.user.kerb, year: year, major: major, dietary_restriction: dietary_restriction, password: self.user.password, resident: self.user.resident, onMealPlan: self.user.onMealPlan)
+        
+        return await POST(endpoint: "/api/updateProfile", obj: updatedUser)
+    }
+    
+    func updateDietaryRestriction(restriction: String) async -> POSTResult {
+        return await POST(endpoint: "/api/changeDietaryRestriction", obj: ["kerb": self.user.kerb, "dietary_restriction": restriction])
     }
     
     func signupNonresident(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String) async -> POSTResult {

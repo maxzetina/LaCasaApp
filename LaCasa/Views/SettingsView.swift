@@ -18,7 +18,7 @@ struct SettingsView: View {
             List{
                 Section("Profile"){
                     NavigationLink{
-                        Text("G")
+                        EditProfileView()
                     } label: {
                         Text("Edit Profile")
                     }

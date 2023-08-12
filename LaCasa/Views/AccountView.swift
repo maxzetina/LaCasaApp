@@ -12,7 +12,11 @@ struct AccountView: View {
 
     @State var residentInfo: ResidentInfo = ResidentInfo.default
     @State var logoutAlert: Bool = false
-
+    
+    @State var editDietaryRestriction: Bool = false
+    @State var newRestriction: String = ""
+    @FocusState var editRestrictionFocused
+    
     var body: some View {
         NavigationView{
             VStack{
@@ -68,14 +72,44 @@ struct AccountView: View {
                     VStack{
                         HStack{
                             Text("Dietary Restriction").fontWeight(.bold)
+                            Button(action: {
+                                editDietaryRestriction = true
+                                editRestrictionFocused = true
+                            }, label: {
+                                Image(systemName: "pencil").padding(.trailing)
+                            })
                             Spacer()
                         }.padding(.leading).padding(.bottom, 4.0)
+                        
                         HStack{
-                            if(modelData.user.dietary_restriction != ""){
-                                Text("\(modelData.user.dietary_restriction)")
+                            if(editDietaryRestriction){
+                                TextField("", text: $newRestriction).focused($editRestrictionFocused).disableAutocorrection(true).onSubmit {
+                                    editRestrictionFocused = false
+                                    editDietaryRestriction = false
+                                    newRestriction = modelData.user.dietary_restriction
+                                }.toolbar {
+                                    ToolbarItemGroup(placement: .keyboard) {
+                                        Button("Cancel", role: .cancel){
+                                            editRestrictionFocused = false
+                                            editDietaryRestriction = false
+                                            newRestriction = modelData.user.dietary_restriction
+                                        }
+                                        
+                                        Spacer()
+
+                                        Button("Update"){
+                                            Task{
+                                                _ = await modelData.updateDietaryRestriction(restriction: newRestriction)
+                                                modelData.user.dietary_restriction = newRestriction
+                                                editRestrictionFocused = false
+                                                editDietaryRestriction = false
+                                            }
+                                        }
+                                    }
+                                }
                             }
                             else{
-                                Text("None")
+                                Text(modelData.user.dietary_restriction == "" ? "None" : modelData.user.dietary_restriction)
                             }
                             Spacer()
                         }.padding([.bottom, .leading])
@@ -143,6 +177,8 @@ struct AccountView: View {
             }
         }.navigationViewStyle(StackNavigationViewStyle()).onAppear{
             Task{
+                newRestriction = modelData.user.dietary_restriction
+                
                 if(modelData.user.isResident()){
                     residentInfo = await modelData.getResidentInfo()
                 }

@@ -61,11 +61,15 @@ struct ChangePasswordView: View {
                 
                 Button(action: {
                     Task{
-                        correctPassword = modelData.user.password == modelData.encryptString(text: currentPassword)
+                        let encryptedInput = modelData.encryptString(text: currentPassword)
+                        correctPassword = modelData.user.password == encryptedInput
 
                         if(correctPassword && pwMeetsLen && includesUppercase && includesNumber && includesSymbol && passwordsMatch){
                             submitPressed.toggle()
-                            _ = await modelData.changePassword(newPassword: newPassword)
+                            let res = await modelData.changePassword(newPassword: newPassword)
+                            if(res.result){
+                                modelData.user.password = encryptedInput
+                            }
                             submitPressed.toggle()
                             dismiss()
                         }

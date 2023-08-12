@@ -11,6 +11,7 @@
 		1B3181482A816FFF00D7D047 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3181472A816FFF00D7D047 /* SettingsView.swift */; };
 		1B31814A2A830B8300D7D047 /* AttendanceCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3181492A830B8300D7D047 /* AttendanceCircle.swift */; };
 		1B31814C2A83F6EA00D7D047 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B31814B2A83F6EA00D7D047 /* ChangePasswordView.swift */; };
+		1B31814E2A849D2300D7D047 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B31814D2A849D2300D7D047 /* EditProfileView.swift */; };
 		1B89D6012A4282D9008C5976 /* LaCasaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6002A4282D9008C5976 /* LaCasaApp.swift */; };
 		1B89D6032A4282D9008C5976 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89D6022A4282D9008C5976 /* ContentView.swift */; };
 		1B89D6052A4282DA008C5976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B89D6042A4282DA008C5976 /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		1B3181472A816FFF00D7D047 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1B3181492A830B8300D7D047 /* AttendanceCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCircle.swift; sourceTree = "<group>"; };
 		1B31814B2A83F6EA00D7D047 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		1B31814D2A849D2300D7D047 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		1B89D5FD2A4282D9008C5976 /* LaCasa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaCasa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B89D6002A4282D9008C5976 /* LaCasaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaCasaApp.swift; sourceTree = "<group>"; };
 		1B89D6022A4282D9008C5976 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				1B89D64A2A68E20C008C5976 /* AccountView.swift */,
 				1B3181492A830B8300D7D047 /* AttendanceCircle.swift */,
 				1B3181472A816FFF00D7D047 /* SettingsView.swift */,
+				1B31814D2A849D2300D7D047 /* EditProfileView.swift */,
 				1B31814B2A83F6EA00D7D047 /* ChangePasswordView.swift */,
 				1B89D6022A4282D9008C5976 /* ContentView.swift */,
 				1B89D63C2A4646CF008C5976 /* LoadingSpinner.swift */,
@@ -384,6 +387,7 @@
 				1B89D63F2A47F30E008C5976 /* ChoresIntro.swift in Sources */,
 				1B89D6372A452ABA008C5976 /* ChoresView.swift in Sources */,
 				1B89D6592A721923008C5976 /* InputTextField.swift in Sources */,
+				1B31814E2A849D2300D7D047 /* EditProfileView.swift in Sources */,
 				1B89D6552A6CBEEF008C5976 /* SavesRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
