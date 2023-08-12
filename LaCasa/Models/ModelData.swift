@@ -130,7 +130,7 @@ class ModelData: ObservableObject {
     
     func requestPassword(kerb: String) async -> Bool {
         let endpoint = "/api/forgotPwd"
-        guard let encoded = try? JSONEncoder().encode(kerb) else {
+        guard let encoded = try? JSONEncoder().encode(["kerb": kerb]) else {
             return false
         }
         
