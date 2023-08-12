@@ -101,8 +101,22 @@ class ModelData: ObservableObject {
     }
     
     func requestPassword(kerb: String) async -> Bool {
-//        Change this and add api
-        return true
+        let endpoint = "/api/forgotPwd"
+        guard let encoded = try? JSONEncoder().encode(kerb) else {
+            return false
+        }
+        
+        let url = URL(string: baseURL + endpoint)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "PATCH"
+        do {
+            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
+            let decodedResponse = try JSONDecoder().decode(POSTResult.self, from: data)
+            return decodedResponse.result
+        } catch {
+            return false
+        }
     }
 
     func signupNonresident(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String) async -> POSTResult {
