@@ -47,7 +47,6 @@ struct ForgotPassword: View {
                     
                     Button(action: {
                         Task{
-//                            let _ = print("kerb: ", kerb)
                             if !checkKerb(text: kerb){
                                 showAlert.toggle()
                             } else {
@@ -55,7 +54,6 @@ struct ForgotPassword: View {
                                 
                                 
                                 let isSent = await modelData.requestPassword(kerb: kerb)
-//                                let _ = print(isSent)
                                 
                                 if(isSent){
                                     sendButtonText = "SUCCESS!"
@@ -72,10 +70,9 @@ struct ForgotPassword: View {
                                 }
                             }
                         }
-//                        let _ = print(sendPressed)
                     }, label: {
                         RoundedRectangle(cornerRadius: 10).frame(width: 300, height: 50).foregroundColor(sendButtonColor).shadow(radius: 10).overlay(
-                                    Text(sendButtonText).foregroundColor(.white).fontWeight(.bold).font(.title3)
+                            Text(sendButtonText).foregroundColor(.white).fontWeight(.bold).font(.title3)
                         )
                     }).alert(isPresented: $showAlert){
                         return Alert(
@@ -83,11 +80,10 @@ struct ForgotPassword: View {
                             message: Text("Please fix the kerb and try again")
                         )
                     }
-                    
                 }.toolbar {
                     ToolbarItemGroup() {
-                        Button("Done",
-                               action: { showForgotPasswordSheet.toggle() })
+                        Button("Done") { showForgotPasswordSheet.toggle()
+                        }
                     }
                 }
             }

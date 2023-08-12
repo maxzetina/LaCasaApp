@@ -9,30 +9,32 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var modelData: ModelData
-    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
-    @AppStorage("kerb") var kerb: String = ""
 
     var body: some View {
         VStack {
-            if(!isLoggedIn){
-                Login(isLoggedIn: $isLoggedIn, user: $kerb)
+            if(!modelData.isLoggedIn){
+                Login()
             }
             else{
                 TabView() {
-                    Home(isLoggedIn: $isLoggedIn, kerb: $kerb)
-                        .tabItem{
-                            Label("Home", systemImage: "house")
-                    }
-                    
                     ChoresView()
                         .tabItem {
                             Label("Chores", systemImage: "list.bullet")
                         }
-
+                    
                     SavesView()
                         .tabItem {
                             Label("Saves", systemImage: "fork.knife")
                         }
+                    
+                    AccountView()
+                        .tabItem{
+                            Label("Profile", systemImage: "person")
+                        }
+                }.onAppear{
+                    Task{
+                        await modelData.getUser(kerb: modelData.kerb)
+                    }
                 }
             }
         }

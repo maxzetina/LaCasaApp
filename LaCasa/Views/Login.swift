@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct Login: View {
-    @Binding var isLoggedIn: Bool
-    @Binding var user: String
-
     @EnvironmentObject var modelData: ModelData
 
     @State private var kerb = ""
@@ -46,7 +43,7 @@ struct Login: View {
             .focused($isKerbInputActive)
 
             
-            PasswordTextField(password: $password)
+            PasswordTextField(placeholder: "password", password: $password)
             .focused($isPwInputActive)
         
            
@@ -65,10 +62,10 @@ struct Login: View {
                     
                     let res = await modelData.handleLogin(kerb: kerb, password: password)
                     
-                    isLoggedIn = res.result
+                    modelData.isLoggedIn = res.result
                     
-                    if(isLoggedIn){
-                        user = kerb
+                    if(modelData.isLoggedIn){
+                        modelData.kerb = kerb
                     }
                     else{
                         loginPressed.toggle()
@@ -104,7 +101,7 @@ struct Login: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login(isLoggedIn: .constant(true), user: .constant("")).environmentObject(ModelData())
+        Login().environmentObject(ModelData())
     }
 }
 

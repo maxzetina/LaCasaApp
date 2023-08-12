@@ -19,10 +19,44 @@ struct User: Hashable, Codable, Identifiable, Equatable {
     var resident: Int
     var onMealPlan: Int
     
-    static let `default` = User(id: 0, fname: "", lname: "", kerb: "", year: 0, major: "", dietary_restriction: "", password: "", resident: 0, onMealPlan: 0)
+    static let `default` = User(id: 0, fname: "DEFAULT", lname: "DEFAULT", kerb: "DEFAULT", year: 0, major: "DEFAULT", dietary_restriction: "DEFAULT", password: "", resident: 0, onMealPlan: 0)
     
-    static func == (userA: User, userB: User) -> Bool {
-        return userA.kerb == userB.kerb
+    func isResident() -> Bool {
+        return self.resident == 1
     }
+}
 
+struct ResidentInfo: Hashable, Codable {
+    var office: String
+    var room: Int
+    var total_housing_points: Double
+    var gbm_attendance: [AttendanceStatus]
+    var ebm_attendance: [AttendanceStatus]
+    
+    static let `default` = ResidentInfo(office: "", room: 0, total_housing_points: 0, gbm_attendance: [], ebm_attendance: [])
+    
+    func isExec() -> Bool {
+        return self.office != "" && self.office != "Webmaster"
+    }
+}
+
+struct ResidentInfoRequest: Codable {
+    var office: String
+    var room: Int
+    var total_housing_points: Double
+    var status1: String
+    var status2: String
+    var status3: String
+    var status4: String
+}
+
+struct EbmAttendanceRequest: Codable {
+    var status1: String
+    var status2: String
+    var status3: String
+    var status4: String
+}
+
+enum AttendanceStatus: String, Codable  {
+    case present, late, absent, none
 }

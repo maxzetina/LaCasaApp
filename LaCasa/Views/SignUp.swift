@@ -112,7 +112,7 @@ struct SignUp: View {
                         Text(bulletPoint + "  Include at least one symbol").foregroundColor(includesSymbol ? .green : .red)
                     }
                     
-                    PasswordTextField(password: $password).onChange(of: password){ newValue in
+                    PasswordTextField(placeholder: "password", password: $password).onChange(of: password){ newValue in
                         
                         pwMeetsLen = newValue.count >= minPasswordLen
                         includesUppercase = containsUppercase(text: newValue)
@@ -260,11 +260,11 @@ struct SignUp: View {
                         }
                         else if(!validFname && selectedRole == Role.nonresident){
                             title = "Invalid First Name"
-                            msg = "First name must not be empty or have special characters or numbers"
+                            msg = "First name must not be empty or have special characters, numbers, or surrounding whitespaces"
                         }
                         else if(!validLname && selectedRole == Role.nonresident){
                             title = "Invalid Last Name"
-                            msg = "Last name must not be empty or have special characters or numbers"
+                            msg = "Last name must not be empty or have special characters, numbers, or surrounding whitespaces"
                         }
                         else if(!validYear && selectedRole == Role.nonresident){
                             title = "Invalid Class Year"

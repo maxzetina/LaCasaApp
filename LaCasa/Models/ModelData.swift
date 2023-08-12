@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CryptoKit
+import SwiftUI
 
 class ModelData: ObservableObject {
     @Published var saves: [Save] = []
@@ -15,8 +16,11 @@ class ModelData: ObservableObject {
     @Published var residents: [User] = []
 //    @Published var mealPlanUsers: [User] = []
 //    @Published var loadedMealPlanUsers = false
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+    @AppStorage("kerb") var kerb: String = ""
+
         
-    let baseURL: String = "https://la-casa-app-server.vercel.app"
+    private let baseURL: String = "https://la-casa-app-server.vercel.app"
     
     func GET<T: Codable>(endpoint: String, type: T.Type, defaultValue: T) async -> T {
         
@@ -60,11 +64,35 @@ class ModelData: ObservableObject {
         let user = await GET(endpoint: endpoint, type: [User].self, defaultValue: [User.default])
         
         if(user.isEmpty){
-            self.user.kerb = kerb
+            self.user = User.default
         }
         else{
             self.user = user[0]
         }
+    }
+    
+    func getResidentInfo() async -> ResidentInfo {
+        let dataArr = await GET(endpoint: "/api/residentInfo?kerb=\(self.user.kerb)", type: [ResidentInfoRequest].self, defaultValue: [])
+        if(dataArr.isEmpty){
+            return ResidentInfo.default
+        }
+        let data = dataArr[0]
+        var residentInfo = ResidentInfo(office: data.office, room: data.room, total_housing_points: data.total_housing_points, gbm_attendance: [], ebm_attendance: [])
+        
+        for status in [data.status1, data.status2, data.status3, data.status4] {
+            residentInfo.gbm_attendance.append(AttendanceStatus(rawValue: status) ?? AttendanceStatus.none)
+        }
+        
+        if (residentInfo.isExec()) {
+            let ebmDataArr = await GET(endpoint: "/api/userEbm?kerb=\(self.user.kerb)", type: [EbmAttendanceRequest].self, defaultValue: [])
+            if(ebmDataArr.isEmpty){ return residentInfo }
+            let ebmData = ebmDataArr[0]
+            for status in [ebmData.status1, ebmData.status2, ebmData.status3, ebmData.status4] {
+                residentInfo.ebm_attendance.append(AttendanceStatus(rawValue: status) ?? AttendanceStatus.none)
+            }
+        }
+        
+        return residentInfo
     }
     
     func getChores() async -> [Chore] {
@@ -92,7 +120,7 @@ class ModelData: ObservableObject {
     }
     
     func pushDinner() async -> POSTResult {
-        return await POST(endpoint: "/api/sendDinnerPushed", obj: ["test": "hi"])
+        return await POST(endpoint: "/api/sendDinnerPushed", obj: ["kerb": self.user.kerb])
     }
     
     func handleLogin(kerb: String, password: String) async -> POSTResult {
@@ -119,6 +147,21 @@ class ModelData: ObservableObject {
         }
     }
 
+    func changePassword(newPassword: String) async -> POSTResult {
+        let encryptedInput = encryptString(text: newPassword)
+        return await POST(endpoint: "/api/changePassword", obj: ["kerb": self.user.kerb, "password": encryptedInput])
+    }
+    
+    func updateProfile(fname: String, lname: String, year: Int, major: String, dietary_restriction: String) async -> POSTResult {
+        let updatedUser = User(fname: fname, lname: lname, kerb: self.user.kerb, year: year, major: major, dietary_restriction: dietary_restriction, password: self.user.password, resident: self.user.resident, onMealPlan: self.user.onMealPlan)
+        
+        return await POST(endpoint: "/api/updateProfile", obj: updatedUser)
+    }
+    
+    func updateDietaryRestriction(restriction: String) async -> POSTResult {
+        return await POST(endpoint: "/api/changeDietaryRestriction", obj: ["kerb": self.user.kerb, "dietary_restriction": restriction])
+    }
+    
     func signupNonresident(fname: String, lname: String, kerb: String, year: Int, major: String, dietary_restriction: String = "", password: String) async -> POSTResult {
         
         let encryptedPassword = encryptString(text: password)
@@ -137,6 +180,10 @@ class ModelData: ObservableObject {
     
     func doesAccountExist(kerb: String) async -> POSTResult {
         return await POST(endpoint: "/api/accountExists", obj: ["kerb": kerb])
+    }
+    
+    func deleteAccount() async -> POSTResult {
+        return await POST(endpoint: "/api/deleteAccount", obj: ["kerb": self.user.kerb])
     }
     
     func getResidents() async {
