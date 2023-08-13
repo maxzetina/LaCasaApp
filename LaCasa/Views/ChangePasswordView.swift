@@ -50,13 +50,11 @@ struct ChangePasswordView: View {
                     includesNumber = containsNumber(text: newValue)
                     includesSymbol = containsSymbol(text: newValue)
                     
-                    passwordsMatch = confirmNewPassword == newValue
-                    
-                    let _ = print(passwordsMatch)
+                    passwordsMatch = confirmNewPassword == newValue                    
                 }
                 PasswordTextField(placeholder: "Confirm New Password", password: $confirmNewPassword).listRowSeparator(.hidden).onChange(of: confirmNewPassword){
                         newValue in
-                        passwordsMatch = currentPassword == newValue
+                        passwordsMatch = newPassword == newValue
                     }
                 
                 Button(action: {
